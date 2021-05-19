@@ -17,6 +17,12 @@ services:
     public: false
     class: CPHPCache
 
+  Prokl\BitrixOrdinaryToolsBundle\Services\Application\GetApplication: ~
+
+  application.instance:
+    class: CMain
+    factory: ['@Prokl\BitrixOrdinaryToolsBundle\Services\Application\GetApplication', 'instance']
+
   # Обертка над CFile.
   bitrix_ordinary_tools.cfile_wrapper:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Utils\CFileWrapper
