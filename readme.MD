@@ -13,7 +13,7 @@ composer.json:
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/proklung/bitrix.core.symfony"
+            "url": "https://github.com/proklung/bitrix-tools-pack-bundle"
         }
     ]
 ```
