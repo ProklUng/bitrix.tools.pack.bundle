@@ -1,0 +1,24 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  # Обработчик LastModified заголовков.
+  bitrix_ordinary_tools.last_modified:
+    shared: false
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Seo\LastModifiedService
+
+  # Определение самого свежего элемента инфоблока.
+  bitrix_ordinary_tools.timestamp_iblock:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Seo\TimestampIblock
+    arguments: ['@bitrix_ordinary_tools.ciblockelement']
+
+  # Определение самого свежего элемента по arResult['ITEMS'].
+  bitrix_ordinary_tools.timestamp_news:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Seo\TimestampNews
+
+  bitrix_ordinary_tools.clearizer:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Seo\Clearizer
+
+  Prokl\BitrixOrdinaryToolsBundle\Services\Seo\Clearizer: '@bitrix_ordinary_tools.clearizer'

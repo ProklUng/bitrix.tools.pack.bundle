@@ -1,0 +1,34 @@
+#########
+# Twig.
+#########
+
+services:
+  # конфигурация по умолчанию в *этом* файле
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  _instanceof:
+    Twig_ExtensionInterface:
+      tags: ['twig.extension']
+
+  # Twig loader
+  twig.loader:
+    class: Twig_Loader_Filesystem
+    arguments:
+      - '%twig_paths%'
+
+  # Twig
+  twig:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigService
+    arguments:
+      - '@twig.loader'
+      - '%debug%'
+      - '%twig_cache_dir%'
+      - '%twig_config%'
+
+  # Экземпляр Twig.
+  twig.instance:
+    class: Twig_Environment
+    factory: ['@twig', 'instance']

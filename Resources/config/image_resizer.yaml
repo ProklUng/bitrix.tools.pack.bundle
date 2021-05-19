@@ -1,0 +1,26 @@
+####################
+# Ресайзер картинок
+####################
+
+services:
+  # конфигурация по умолчанию в *этом* файле
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  # Resize
+  image.resizer:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Resizer\Resize
+
+  # ResizeNoUpscale
+  image.resizer.no.upscale:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Resizer\ResizeNoUpscale
+
+  # ResizeUpscale
+  image.resizer.upscale:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Resizer\ResizeUpscale
+
+  # ResizeHardCrop
+  image.resizer.hard.crop:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Resizer\ResizeHardCrop

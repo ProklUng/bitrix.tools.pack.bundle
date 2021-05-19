@@ -1,0 +1,44 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  bitrix_ordinary_tools.ciblockelement:
+    public: false
+    class: CIBlockElement
+
+  bitrix_ordinary_tools.cfile:
+    public: false
+    class: CFile
+
+  # Битриксовый кэшер
+  bitrix_ordinary_tools.bitrix_cacher:
+    public: false
+    class: CPHPCache
+
+  # Обертка над CFile.
+  bitrix_ordinary_tools.cfile_wrapper:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Utils\CFileWrapper
+    arguments: ['@bitrix_ordinary_tools.cfile']
+
+  iblock.element.manager:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Iblock\IblockElementManager
+
+  iblock.property.manager:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Iblock\IBlockPropertyManager
+
+  iblock.section.manager:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Iblock\IBlockSectionManager
+
+  hlblock.manager:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Iblock\HLIBlockElementManager
+
+  iblock.manager:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Iblock\IblockManager
+
+  # Кэшер.
+  bitrix_ordinary_tools.cacher:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Cache\LegacyCacher
+    arguments: ['@bitrix_ordinary_tools.bitrix_cacher']
+

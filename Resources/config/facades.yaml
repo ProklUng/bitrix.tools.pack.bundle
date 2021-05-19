@@ -1,0 +1,21 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\LastModifiedFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CFileFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\TimestampFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\TimestampIblockFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\ResizerImageFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\ResizerImageHardCropFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\ResizerImageNoUpscaleFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\ResizerImageUpscaleFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\IblockFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\IblockPropertyFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\IblockSectionFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CacherFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\HLIblockFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\IblockElementFacade: ~
+

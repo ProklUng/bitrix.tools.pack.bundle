@@ -1,0 +1,30 @@
+{
+    "name": "proklung/bitrix-tools-pack-bundle",
+    "description": "Ordinary tools pack for Symfony+Bitrix.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gavrilov Fedy",
+            "email": "fedor.gavrilov.75@mail.ru",
+            "homepage": "https://github.com/ProklUng"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ProklUng/bitrix.tools.pack.bundle/issues",
+        "source": "https://github.com/ProklUng/bitrix.tools.pack.bundle"
+    },
+    "autoload": {
+        "psr-4": {
+            "Prokl\\BitrixOrdinaryToolsBundle\\": ""
+        }
+    },
+    "require": {
+        "php": ">=7.1 | 8.0",
+        "symfony/dependency-injection": "^4.0 || ^5.0",
+        "symfony/http-kernel": "^4.0 || ^5.0",
+        "symfony/config": "~4|~5",
+        "intervention/image": "^2.5"
+    }
+
+}
