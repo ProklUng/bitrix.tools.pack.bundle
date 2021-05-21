@@ -7,6 +7,8 @@ use Prokl\FacadeBundle\Services\AbstractFacade;
 /**
  * Class EventDispatcherFacade
  * @package Prokl\BitrixOrdinaryToolsBundle\Services\Facades
+ *
+ * @method static dispatch($event) : void
  */
 class ComponentEventDispatcherFacade extends AbstractFacade
 {

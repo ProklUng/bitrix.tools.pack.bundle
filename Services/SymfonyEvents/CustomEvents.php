@@ -46,7 +46,7 @@ class CustomEvents
         $handlers = array_filter($handlers);
 
         if (count($handlers) > 0) {
-            $this->listenersCollection = $handlers;
+            $this->listenersCollection = current($handlers);
         }
 
         $this->dispatcher = $dispatcher;

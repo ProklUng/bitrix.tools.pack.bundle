@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="1"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    allowStringToStandInForClass="true"
+    allowCoercionFromStringToClassConst="true"
+    findUnusedPsalmSuppress="true"
+    skipChecksOnUnresolvableIncludes="true"
+>
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
+        <pluginClass class="Psalm\MockeryPlugin\Plugin"/>
+    </plugins>
+    <projectFiles>
+        <directory name="/"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+            <directory name="Tests"/>
+            <file name="BitrixOrdinaryToolsBundle.php"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+
+    </issueHandlers>
+</psalm>
