@@ -2,6 +2,7 @@
 
 namespace Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents;
 
+use Iterator;
 use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Interfaces\BitrixComponentEventHandlerInterface;
 use stdClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -13,20 +14,20 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class CustomEvents
 {
     /**
-     * @var array $listenersCollection Коллекция слушателей событий.
+     * @var BitrixComponentEventHandlerInterface[] $listenersCollection Слушатели событий.
      */
-    private $listenersCollection;
+    private $listenersCollection = [];
 
     /**
-     * @var EventDispatcherInterface $dispatcher
+     * @var EventDispatcherInterface $dispatcher Event dispatcher.
      */
     private $dispatcher;
 
     /**
      * Events constructor.
      *
-     * @param EventDispatcherInterface $dispatcher
-     * @param ...                $eventsHandlerBag
+     * @param EventDispatcherInterface $dispatcher          Event dispatcher.
+     * @param mixed                    ...$eventsHandlerBag Сервисы, отмеченные тэгом bitrix.component.event.
      */
     public function __construct(
         EventDispatcherInterface $dispatcher,
@@ -41,7 +42,12 @@ class CustomEvents
             $handlers[] = $array;
         }
 
-        $this->listenersCollection = $handlers;
+
+        $handlers = array_filter($handlers);
+
+        if (count($handlers) > 0) {
+            $this->listenersCollection = $handlers;
+        }
 
         $this->dispatcher = $dispatcher;
     }
