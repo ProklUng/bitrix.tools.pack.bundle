@@ -1,0 +1,50 @@
+####################
+# Кастомные события
+####################
+
+services:
+  # конфигурация по умолчанию в *этом* файле
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  custom.event.dispatcher:
+    class: Local\Util\SymfonyEvents\Events
+    arguments:
+      - '@event_dispatcher'
+      - !tagged_iterator bitrix.component.event
+
+  Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\OnResultModifierSections:
+    tags:
+      - { name: bitrix.component.event }
+
+  # Вызывается в component_epilog.php (где будет указано)
+  Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\OnComponentEpilogLastModified:
+    tags:
+      - { name: bitrix.component.event }
+
+  # Установка title & description на детальных страницах
+  Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo\OnDetailSetSeoData:
+    tags:
+      - { name: bitrix.component.event }
+
+  #  Канонические ссылки в news.detail
+  Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo\Canonical:
+    tags:
+      - { name: bitrix.component.event }
+
+  # H1 в news.list
+  Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo\H1:
+    tags:
+      - { name: bitrix.component.event }
+
+  # H1 в news.detail
+  Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo\H1Detail:
+    tags:
+      - { name: bitrix.component.event }
+
+  # Установка title & description на разводных страницах
+  Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo\OnSectionSetSeoData:
+    tags:
+      - { name: bitrix.component.event }

@@ -3,13 +3,30 @@
 namespace Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo;
 
 use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Events\ResultModifierDetailEvent;
+use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Interfaces\BitrixComponentEventHandlerInterface;
 
 /**
  * Class H1
  * @package Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo
  */
-class H1Detail
+class H1Detail implements BitrixComponentEventHandlerInterface
 {
+    /**
+     * @inheritDoc
+     */
+    public function event() : string
+    {
+        return 'on.result.modifier.component.detail';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function priority() : int
+    {
+        return 350;
+    }
+
     /**
      * Калькуляция H1 для детальных страниц.
      *
@@ -17,7 +34,7 @@ class H1Detail
      *
      * @return void
      */
-    public function action(ResultModifierDetailEvent $event): void
+    public function action($event): void
     {
         $arResult = $event->arResult();
 

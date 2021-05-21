@@ -4,13 +4,30 @@ namespace Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers;
 
 use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Events\ResultModifierSectionsEvent;
 use Prokl\BitrixOrdinaryToolsBundle\Services\Facades\TimestampFacade;
+use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Interfaces\BitrixComponentEventHandlerInterface;
 
 /**
  * Class onResultModifierSections
  * @package Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers
  */
-class OnResultModifierSections
+class OnResultModifierSections implements BitrixComponentEventHandlerInterface
 {
+    /**
+     * @inheritDoc
+     */
+    public function event() : string
+    {
+        return 'on.result.modifier.component';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function priority() : int
+    {
+        return 100;
+    }
+
     /**
      * Слушатель события on.result.modifier.component. Вычисление последнего измененного элемента.
      *
@@ -18,7 +35,7 @@ class OnResultModifierSections
      *
      * @return mixed
      */
-    public function action(ResultModifierSectionsEvent $event): void
+    public function action($event): void
     {
         $arResult = $event->arResult();
         // ITEMS или SECTIONS

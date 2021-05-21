@@ -4,13 +4,30 @@
 namespace Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo;
 
 use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Events\ResultModifierDetailEvent;
+use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Interfaces\BitrixComponentEventHandlerInterface;
 
 /**
  * Class Canonical
  * @package Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo
  */
-class Canonical
+class Canonical implements BitrixComponentEventHandlerInterface
 {
+    /**
+     * @inheritDoc
+     */
+    public function event() : string
+    {
+        return 'on.result.modifier.component.detail';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function priority() : int
+    {
+        return 100;
+    }
+
     /**
      * Калькуляция Canonical.
      *
@@ -18,7 +35,7 @@ class Canonical
      *
      * @return void
      */
-    public function action(ResultModifierDetailEvent $event)
+    public function action($event) : void
     {
         $arResult = $event->arResult();
 

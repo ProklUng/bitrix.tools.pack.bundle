@@ -3,13 +3,30 @@
 namespace Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo;
 
 use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Events\ComponentEpilogEvent;
+use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Interfaces\BitrixComponentEventHandlerInterface;
 
 /**
  * Class OnDetailSetSeoData
  * @package Tests\App\Events\Samples\Handlers\Seo
  */
-class OnDetailSetSeoData
+class OnDetailSetSeoData implements BitrixComponentEventHandlerInterface
 {
+    /**
+     * @inheritDoc
+     */
+    public function event() : string
+    {
+        return 'on.component.epilog';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function priority() : int
+    {
+        return 200;
+    }
+
     /**
      * Слушатель события set.seo.meta.tags. Установка title & description.
      *
@@ -17,7 +34,7 @@ class OnDetailSetSeoData
      *
      * @return void
      */
-    public function action(ComponentEpilogEvent $event): void
+    public function action($event): void
     {
         if (empty($event->arResult())) {
             return;

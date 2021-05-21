@@ -4,13 +4,30 @@ namespace Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\Seo;
 
 use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Events\ComponentEpilogEvent;
 use Prokl\BitrixOrdinaryToolsBundle\Services\Facades\IblockFacade;
+use Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Interfaces\BitrixComponentEventHandlerInterface;
 
 /**
  * Class OnSectionSetSeoData
  * @package Tests\App\Events\Samples\Handlers\Seo
  */
-class OnSectionSetSeoData
+class OnSectionSetSeoData implements BitrixComponentEventHandlerInterface
 {
+    /**
+     * @inheritDoc
+     */
+    public function event() : string
+    {
+        return 'on.component.epilog.sections';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function priority() : int
+    {
+        return 200;
+    }
+
     /**
      * Слушатель события set.seo.section.page. Установка title & description.
      *
@@ -18,7 +35,7 @@ class OnSectionSetSeoData
      *
      * @return void
      */
-    public function action(ComponentEpilogEvent $event): void
+    public function action($event): void
     {
         if (empty($event->arResult())) {
             return;
