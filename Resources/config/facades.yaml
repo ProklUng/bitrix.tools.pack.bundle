@@ -18,4 +18,5 @@ services:
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CacherFacade: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\HLIblockFacade: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\IblockElementFacade: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\ComponentEventDispatcherFacade: ~
 
