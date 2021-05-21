@@ -18,7 +18,6 @@
         <directory name="/"/>
         <ignoreFiles>
             <directory name="vendor"/>
-            <directory name="Tests"/>
             <file name="BitrixOrdinaryToolsBundle.php"/>
         </ignoreFiles>
     </projectFiles>
