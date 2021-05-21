@@ -47,7 +47,7 @@ class TimestampNews
      *
      * @return array
      */
-    protected function process(array $arResultItems = []) : array
+    private function process(array $arResultItems = []) : array
     {
         if (count($arResultItems) === 0) {
             return [];

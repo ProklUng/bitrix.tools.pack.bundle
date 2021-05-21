@@ -39,11 +39,10 @@ class OnResultModifierSections implements BitrixComponentEventHandlerInterface
     {
         $arResult = $event->arResult();
         // ITEMS или SECTIONS
-        $arData = $this->getData($arResult);
+        $arData = (array)$this->getData($arResult);
 
         $arResult['LAST_MODIFIED'] = '';
-        if (!empty($arData)) {
-            /** @noinspection PhpUndefinedMethodInspection */
+        if (count($arData) > 0) {
             $arResult['LAST_MODIFIED'] = TimestampFacade::setTimestamps($arData)->getNewestTimestamp();
         }
 
@@ -57,15 +56,15 @@ class OnResultModifierSections implements BitrixComponentEventHandlerInterface
      *
      * @return array
      */
-    protected function getData(array $arResult) : array
+    private function getData(array $arResult) : array
     {
         $result = [];
 
-        if (!empty($arResult['ITEMS'])) {
+        if (array_key_exists('ITEMS', $arResult) && count($arResult['ITEMS']) > 0) {
             $result = $arResult['ITEMS'];
         }
 
-        if (!empty($arResult['SECTIONS'])) {
+        if (array_key_exists('SECTIONS', $arResult) && count($arResult['SECTIONS']) > 0) {
             $result = $arResult['SECTIONS'];
         }
 

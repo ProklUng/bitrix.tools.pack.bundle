@@ -41,11 +41,11 @@ class Canonical implements BitrixComponentEventHandlerInterface
 
         $event->setResult($event->arResult(), 'CANONICAL_URL', '');
 
-        if (!empty($arResult['PROPERTIES']['CANONICAL_URL']['VALUE'])) {
+        if ((string)$arResult['PROPERTIES']['CANONICAL_URL']['VALUE']) {
             $event->setResult(
                 $arResult,
                 'CANONICAL_URL',
-                $arResult['PROPERTIES']['CANONICAL_URL']['VALUE']
+                (string)$arResult['PROPERTIES']['CANONICAL_URL']['VALUE']
             );
         }
     }

@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  *
  * @since 19.05.2021
  */
-class BitrixOrdinaryToolsBundle extends Bundle
+final class BitrixOrdinaryToolsBundle extends Bundle
 {
    /**
    * @inheritDoc

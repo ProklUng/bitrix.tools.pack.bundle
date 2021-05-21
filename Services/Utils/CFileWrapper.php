@@ -57,7 +57,7 @@ class CFileWrapper
 
         $arFile = $this->file::MakeFileArray($_SERVER['DOCUMENT_ROOT'] . $path);
 
-        return $this->file::SaveFile($arFile, $savePath);
+        return (int)$this->file::SaveFile($arFile, $savePath);
     }
 
     /**
@@ -79,7 +79,7 @@ class CFileWrapper
             return '';
         }
 
-        return $this->file::GetPath($result);
+        return (string)$this->file::GetPath($result);
     }
 
     /**

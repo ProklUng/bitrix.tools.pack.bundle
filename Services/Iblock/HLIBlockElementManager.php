@@ -5,6 +5,7 @@ namespace Prokl\BitrixOrdinaryToolsBundle\Services\Iblock;
 use Bitrix\Highloadblock\HighloadBlockTable;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
+use Bitrix\Main\ORM\Data\DataManager;
 use Bitrix\Main\SystemException;
 use Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CacherFacade;
 
@@ -16,8 +17,8 @@ class HLIBlockElementManager
 {
     /** Результат выборки из HL ИБ.
      *
-     * @param string $sHLIblockCode Код HL блока.
-     * @param array $arParams Параметры выборки.
+     * @param string $hLIblockCode Код HL блока.
+     * @param array  $arParams     Параметры выборки.
      *
      * @return mixed
      * @throws ArgumentException
@@ -25,7 +26,7 @@ class HLIBlockElementManager
      * @throws SystemException
      */
     public function getIBlockElements(
-        string $sHLIblockCode,
+        string $hLIblockCode,
         array $arParams = [
             'AR_ORDER',
             'AR_FILTER',
@@ -35,11 +36,10 @@ class HLIBlockElementManager
     ): array {
 
         // Если не передали код HL блока, то прекращаем работу.
-        if (!$sHLIblockCode) {
+        if (!$hLIblockCode) {
             return [];
         }
 
-        /** @var $arDefValues $arDefValues  Значения по-умолчанию. */
         $arDefValues = [
             'AR_ORDER' => ['ID' => 'ASC'],
             'AR_FILTER' => [],
@@ -48,9 +48,9 @@ class HLIBlockElementManager
 
         $arParams = array_merge($arDefValues, $arParams);
 
-        $sHlClassName = $this->getHLBlockClassByCode($sHLIblockCode);
+        $dataManager = $this->getHLBlockClassByCode($hLIblockCode);
 
-        $obData = $sHlClassName::getList(
+        $data = $dataManager::getList(
             [
                 'select' => $arParams['AR_SELECT'],
                 'order' => $arParams['AR_ORDER'],
@@ -60,8 +60,9 @@ class HLIBlockElementManager
 
         $arResult = [];
 
-        while ($arData = $obData->fetch()) {
-            $idElement = $arData['ID'];
+        /** @var array $arData */
+        while ($arData = $data->fetch()) {
+            $idElement = (int)$arData['ID'];
             $arResult[$idElement] = $arData;
         }
 
@@ -72,18 +73,19 @@ class HLIBlockElementManager
     /**
      *  Кэшированный результат выборки из HL блока.
      *
-     * @param string $sCodeHLblock Код HL блока.
-     * @param array  $arParams     Параметры с типом и кодом инфоблока.
+     * @param string $codeHLblock Код HL блока.
+     * @param array  $arParams    Параметры с типом и кодом инфоблока.
      *
      * @return mixed
+     * @psalm-suppress MixedMethodCall
      */
     public function getIBlockElementsCached(
-        string $sCodeHLblock,
+        string $codeHLblock,
         array $arParams = ['AR_ORDER', 'AR_FILTER', 'AR_SELECT']
     ) : array {
-        return CacherFacade::setCacheId($sCodeHLblock.serialize(array_values($arParams)))
+        return CacherFacade::setCacheId($codeHLblock.serialize(array_values($arParams)))
             ->setCallback([$this, 'getIBlockElements'])
-            ->setCallbackParams($sCodeHLblock, $arParams)
+            ->setCallbackParams($codeHLblock, $arParams)
             ->setTtl(604800)
             ->returnResultCache();
     }
@@ -91,32 +93,22 @@ class HLIBlockElementManager
     /**
      * Получить название класса HL блока по его коду
      *
-     * @param string $sCodeHLblock Код HL блока.
+     * @param string $codeHLblock Код HL блока.
      *
-     * @return string|null
+     * @return DataManager
      * @throws ArgumentException
      * @throws ObjectPropertyException
      * @throws SystemException
      */
     private function getHLBlockClassByCode(
-        string $sCodeHLblock
-    ): ?string {
-        $obHlblock = HighloadBlockTable::getList(
+        string $codeHLblock
+    ): DataManager {
+        $hlblock = (string)HighloadBlockTable::getList(
             [
-                'filter' => ['=NAME' => $sCodeHLblock],
+                'filter' => ['=NAME' => $codeHLblock],
             ]
         )->fetch();
 
-        if (!$obHlblock) {
-            $arResult['TERMS_DESCRIPTION'] = [];
-        }
-
-        try {
-            $sHlClassName = (HighloadBlockTable::compileEntity($obHlblock))->getDataClass();
-        } catch (SystemException $e) {
-            return false;
-        }
-
-        return $sHlClassName;
+        return (HighloadBlockTable::compileEntity($hlblock))->getDataClass();
     }
 }

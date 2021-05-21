@@ -64,7 +64,7 @@ class TimestampIblock
      *
      * @return array
      */
-    protected function query(
+    private function query(
         int $iblockId
     ) : array {
 

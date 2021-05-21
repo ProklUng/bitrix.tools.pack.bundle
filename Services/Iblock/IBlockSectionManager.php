@@ -47,15 +47,15 @@ class IBlockSectionManager
                 'CODE' => $arParams['CODE'],
             ],
             false,
-            $arParams['AR_SELECT'],
+            (array)$arParams['AR_SELECT'],
             false
         );
 
         $arResult = $res->GetNext();
-        if ($arResult['ID'] > 0) {
+        if ((int)$arResult['ID'] > 0) {
             //если есть картинка, взять путь к ней
-            if ($arResult['PICTURE'] > 0) {
-                $arResult['PICTURE'] = CFile::GetFileArray($arResult['PICTURE']);
+            if ((int)$arResult['PICTURE'] > 0) {
+                $arResult['PICTURE'] = CFile::GetFileArray((int)$arResult['PICTURE']);
             }
 
             return $arResult;

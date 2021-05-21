@@ -42,7 +42,6 @@ class CustomEvents
             $handlers[] = $array;
         }
 
-
         $handlers = array_filter($handlers);
 
         if (count($handlers) > 0) {

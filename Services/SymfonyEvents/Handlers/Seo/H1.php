@@ -36,9 +36,9 @@ class H1 implements BitrixComponentEventHandlerInterface
      */
     public function action($event): void
     {
-        $h1 = $event->arParams('H1_PROPERTY') ?: $event->arResult('NAME');
+        $h1 = (string)$event->arParams('H1_PROPERTY') ?: (string)$event->arResult('NAME');
 
-        $event->setResult($event->arResult(), 'H1', $h1);
+        $event->setResult((array)$event->arResult(), 'H1', $h1);
     }
 
 }

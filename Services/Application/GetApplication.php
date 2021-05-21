@@ -20,6 +20,7 @@ class GetApplication
      */
     public function instance() : CMain
     {
+        /** @var CMain $APPLICATION */
         global $APPLICATION;
 
         return $APPLICATION;

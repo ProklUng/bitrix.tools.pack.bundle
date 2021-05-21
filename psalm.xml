@@ -14,6 +14,9 @@
         <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
         <pluginClass class="Psalm\MockeryPlugin\Plugin"/>
     </plugins>
+    <extraFiles>
+        <directory name="./vendor/sheerockoff/bitrix-ci/files"/>
+    </extraFiles>
     <projectFiles>
         <directory name="/"/>
         <ignoreFiles>
@@ -23,6 +26,82 @@
     </projectFiles>
 
     <issueHandlers>
-
+        <InvalidCatch>
+            <errorLevel type="suppress">
+                <referencedClass name="Psr\SimpleCache\InvalidArgumentException"/>
+                <referencedClass name="Psr\Cache\InvalidArgumentException"/>
+            </errorLevel>
+        </InvalidCatch>
+        <InvalidThrow>
+            <errorLevel type="suppress">
+                <referencedClass name="Psr\SimpleCache\InvalidArgumentException"/>
+                <referencedClass name="Psr\Cache\InvalidArgumentException"/>
+            </errorLevel>
+        </InvalidThrow>
+        <MixedInferredReturnType>
+            <errorLevel type="suppress">
+                <directory name="/"/>
+            </errorLevel>
+        </MixedInferredReturnType>
+        <DeprecatedClass>
+            <errorLevel type="suppress">
+                <directory name="/"/>
+            </errorLevel>
+        </DeprecatedClass>
+        <DeprecatedMethod>
+            <errorLevel type="suppress">
+                <directory name="/"/>
+            </errorLevel>
+        </DeprecatedMethod>
+        <UndefinedMethod>
+            <errorLevel type="suppress">
+                <directory name="/"/>
+            </errorLevel>
+        </UndefinedMethod>
+        <UndefinedConstant>
+            <errorLevel type="suppress">
+                <directory name="/"/>
+            </errorLevel>
+        </UndefinedConstant>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <directory name="/"/>
+            </errorLevel>
+        </UndefinedClass>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="/"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+        <MissingDependency>
+            <errorLevel type="suppress">
+                <directory name="/"/>
+            </errorLevel>
+        </MissingDependency>
+        <MoreSpecificImplementedParamType>
+            <errorLevel type="suppress">
+                <directory name="Services/SymfonyEvents/Handlers/"/>
+            </errorLevel>
+        </MoreSpecificImplementedParamType>
+        <MixedMethodCall>
+            <errorLevel type="suppress">
+                <directory name="Services/SymfonyEvents/Handlers/"/>
+            </errorLevel>
+        </MixedMethodCall>
+        <MixedArrayAccess>
+            <errorLevel type="suppress">
+                <directory name="Services/SymfonyEvents/Handlers/"/>
+            </errorLevel>
+        </MixedArrayAccess>
+        <MixedReturnStatement>
+            <errorLevel type="suppress">
+                <directory name="/"/>
+            </errorLevel>
+        </MixedReturnStatement>
+        <MixedOperand>
+            <errorLevel type="suppress">
+                <file name="Services/Utils/CFileWrapper.php"/>
+            </errorLevel>
+        </MixedOperand>
     </issueHandlers>
 </psalm>

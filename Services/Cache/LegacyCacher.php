@@ -12,57 +12,57 @@ use Exception;
  *
  * @since 22.10.2020 Доработка.
  */
-class LegacyCacher
+final class LegacyCacher
 {
     /**
      * @var CPHPCache $cacheHandler Обработчик кэша.
      */
-    protected $cacheHandler;
+    private $cacheHandler;
 
     /**
      * @var string ID кэша.
      */
-    protected $cacheId;
+    private $cacheId;
 
     /**
      * @var callable $callback Обработчик, он же получатель данных.
      */
-    protected $callback;
+    private $callback;
 
     /**
      * @var array $timeSeconds Параметры обработчика.
      */
-    protected $arCallbackParams;
+    private $arCallbackParams;
 
     /**
      * @var integer $timeSeconds Время жизни кэша.
      */
-    protected $timeSeconds;
+    private $timeSeconds;
 
     /**
      * @var string $currentUrl Текущий URL.
      */
-    protected $currentUrl;
+    private $currentUrl;
 
     /**
      * @var string $baseDir Базовая директория кэша (подпапка в bitrix/cache).
      */
-    protected $baseDir = '';
+    private $baseDir = '';
 
     /**
      * Cacher constructor.
      *
-     * @param CPHPCache $cacheHandler     Обработчик кэша.
-     * @param string    $cacheId          Ключ кэша.
-     * @param mixed     $callback         Callback функция.
-     * @param array     $arCallbackParams Параметры callback функции.
-     * @param integer   $timeSeconds      Время кэширования.
-     * @param string    $currentUrl       Текущий URL.
+     * @param CPHPCache     $cacheHandler     Обработчик кэша.
+     * @param string        $cacheId          Ключ кэша.
+     * @param callable|null $callback         Callback функция.
+     * @param array         $arCallbackParams Параметры callback функции.
+     * @param integer       $timeSeconds      Время кэширования.
+     * @param string        $currentUrl       Текущий URL.
      */
     public function __construct(
         CPHPCache $cacheHandler,
         string $cacheId = '',
-        $callback = null,
+        ?callable $callback = null,
         array $arCallbackParams = [],
         int $timeSeconds = 604800,
         string $currentUrl = ''
@@ -70,10 +70,28 @@ class LegacyCacher
         $this->cacheHandler = $cacheHandler;
         $this->currentUrl = $currentUrl;
 
-        // ID кэша формируется из переданного и соли от callback и параметров.
-        $this->cacheId = $cacheId . md5($callback) . $this->hashCache($arCallbackParams);
+        $callbackSalt = '';
+        if ($callback !== null) {
+            /** @var mixed $callbackResult */
+            $callbackResult = $callback();
+            if (is_array($callbackResult)) {
+                $callbackResult = implode('', $callbackResult);
+            }
 
-        $this->callback = $callback;
+            if (is_object($callbackResult)) {
+                $callbackResult = serialize($callbackResult);
+            }
+
+            $callbackSalt = (string)$callbackResult;
+        }
+
+        // ID кэша формируется из переданного и соли от callback и параметров.
+        $this->cacheId = $cacheId . md5($callbackSalt) . $this->hashCache($arCallbackParams);
+
+        if ($callback !== null) {
+            $this->callback = $callback;
+        }
+
         $this->arCallbackParams = $arCallbackParams;
 
         // Отрубить кэш для окружения dev.
@@ -83,18 +101,18 @@ class LegacyCacher
     /**
      * Фасад.
      *
-     * @param string $cacheId Ключ кэша.
-     * @param mixed $callback Callback функция.
-     * @param array $arCallbackParams Параметры callback функции.
-     * @param integer $timeSeconds Время кэширования.
-     * @param string $currentUrl Текущий URL.
+     * @param string        $cacheId          Ключ кэша.
+     * @param callable|null $callback         Callback функция.
+     * @param array         $arCallbackParams Параметры callback функции.
+     * @param integer       $timeSeconds      Время кэширования.
+     * @param string        $currentUrl       Текущий URL.
      *
      * @return mixed
      * @throws Exception
      */
     public static function cacheFacade(
         string $cacheId,
-        $callback,
+        ?callable $callback,
         array $arCallbackParams = [],
         int $timeSeconds = 86400,
         string $currentUrl = ''
@@ -123,11 +141,13 @@ class LegacyCacher
         $cachePath = '/' . SITE_ID . '/' . $this->baseDir . $this->cacheId;
 
         if ($this->cacheHandler->InitCache($this->timeSeconds, $this->cacheId, $cachePath)) {
+            /** @var array $vars */
             $vars = $this->cacheHandler->GetVars();
-            $arResult = $vars['result'];
+            $arResult = (array)$vars['result'];
         } elseif ($this->cacheHandler->StartDataCache()) {
             $callback = $this->callback;
             try {
+                /** @psalm-suppress MixedAssignment */
                 $arResult = $callback(...$this->arCallbackParams);
             } catch (Exception $e) {
                 $this->cacheHandler->AbortDataCache();
@@ -233,7 +253,7 @@ class LegacyCacher
      *
      * @return string
      */
-    protected function hashCache(array $arParams = []) : string
+    private function hashCache(array $arParams = []) : string
     {
         return md5(serialize($arParams));
     }

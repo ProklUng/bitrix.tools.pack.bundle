@@ -48,7 +48,7 @@ class BaseBitrixComponentEvent extends Event implements BitrixComponentEventInte
      *
      * @return mixed
      */
-    public function arResult(string $key = null)
+    public function arResult(?string $key = null)
     {
         if ($key === null) {
             return $this->arResult;
@@ -113,11 +113,11 @@ class BaseBitrixComponentEvent extends Event implements BitrixComponentEventInte
      *
      * @param array       $arResult $arResult.
      * @param string|null $key      Ключ.
-     * @param null        $value    Данные.
+     * @param mixed       $value    Данные.
      *
      * @return void
      */
-    public function setResult(array $arResult, string $key = null, $value = null) : void
+    public function setResult(array $arResult, ?string $key = null, $value = null) : void
     {
         if ($key !== null) {
             $this->arResult[$key] = $value;

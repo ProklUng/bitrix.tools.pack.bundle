@@ -53,19 +53,19 @@ class OnDetailSetSeoData implements BitrixComponentEventHandlerInterface
      *
      * @return string
      */
-    protected function title(ComponentEpilogEvent $event) : string
+    private function title(ComponentEpilogEvent $event) : string
     {
-        $arResult = $event->arResult();
+        $arResult = (array)$event->arResult();
 
-        if (empty($arResult['IPROPERTY_VALUES'])) {
+        if (!array_key_exists('IPROPERTY_VALUES', $arResult)
+            || count((array)$arResult['IPROPERTY_VALUES']) === 0
+        ) {
             return (string)$arResult['NAME'];
         }
 
-        $title = $arResult['IPROPERTY_VALUES']['ELEMENT_META_TITLE'];
+        $title = (string)$arResult['IPROPERTY_VALUES']['ELEMENT_META_TITLE'];
 
-        return !empty($title) ?
-            $arResult['IPROPERTY_VALUES']['ELEMENT_META_TITLE']
-            :  $arResult['NAME'];
+        return $title ?: $arResult['NAME'];
     }
 
     /**
@@ -75,19 +75,19 @@ class OnDetailSetSeoData implements BitrixComponentEventHandlerInterface
      *
      * @return string
      */
-    protected function description(ComponentEpilogEvent $event) : string
+    private function description(ComponentEpilogEvent $event) : string
     {
-        $arResult = $event->arResult();
+        $arResult = (array)$event->arResult();
 
-        if (empty($arResult['IPROPERTY_VALUES'])) {
+        if (!array_key_exists('IPROPERTY_VALUES', $arResult)
+            || count((array)$arResult['IPROPERTY_VALUES']) === 0
+        ) {
             return '';
         }
 
-        $description = $arResult['IPROPERTY_VALUES']['SECTION_META_DESCRIPTION'];
+        $description = (string)$arResult['IPROPERTY_VALUES']['SECTION_META_DESCRIPTION'];
 
-        return !empty($description) ?
-            $arResult['IPROPERTY_VALUES']['SECTION_META_DESCRIPTION']
-            :  '';
+        return $description ?: '';
     }
 
     /**
@@ -100,11 +100,11 @@ class OnDetailSetSeoData implements BitrixComponentEventHandlerInterface
      */
     private function setSeoMetaTags(string $title, string $description) : void
     {
-        if (!empty($title)) {
+        if ($title) {
             $GLOBALS['APPLICATION']->SetPageProperty('title', $title);
         }
 
-        if (!empty($description)) {
+        if ($description) {
             $GLOBALS['APPLICATION']->SetPageProperty('description', $description);
         }
     }

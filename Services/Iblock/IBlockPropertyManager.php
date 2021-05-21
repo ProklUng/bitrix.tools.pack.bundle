@@ -4,6 +4,7 @@ namespace Prokl\BitrixOrdinaryToolsBundle\Services\Iblock;
 
 use CIBlockProperty;
 use CIBlockPropertyEnum;
+use CIBlockPropertyEnumResult;
 use Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CacherFacade;
 
 /**
@@ -27,8 +28,9 @@ class IBlockPropertyManager
 
         $rs = CIBlockPropertyEnum::GetList($arSort, $arFilter);
 
+        /** @var array $ob */
         while ($ob = $rs->Fetch()) {
-            $arPropEnumList[$ob['ID']] = $ob;
+            $arPropEnumList[(int)$ob['ID']] = $ob;
         }
 
         return $arPropEnumList;
@@ -37,24 +39,24 @@ class IBlockPropertyManager
     /**
      * Свойство типа - список с XML_ID из кэша.
      *
-     * @param string $iblockID      ID инфоблока.
-     * @param string $sPropertyCode Код свойства инфоблока.
+     * @param integer $iblockID     ID инфоблока.
+     * @param string  $propertyCode Код свойства инфоблока.
      *
      * @return mixed
+     * @psalm-suppress MixedMethodCall
      */
-    public function getPropertyEnumListByCodeCached($iblockID, $sPropertyCode)
+    public function getPropertyEnumListByCodeCached(int $iblockID, string $propertyCode)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
-        return CacherFacade::setCacheId('property' . $iblockID . $sPropertyCode)
+        return CacherFacade::setCacheId('property' . $iblockID . $propertyCode)
             ->setCallback([$this, 'getPropertyEnumListByCode'])
-            ->setCallbackParams(['IBLOCK_ID' => $iblockID, 'PROPERTY_CODE' => $sPropertyCode])
+            ->setCallbackParams(['IBLOCK_ID' => $iblockID, 'PROPERTY_CODE' => $propertyCode])
             ->setTtl(604800)
             ->returnResultCache();
     }
 
     /** Все свойства ИБ.
      *
-     * @param int $iblockId
+     * @param integer $iblockId ID инфоблока.
      *
      * @return array
      */
@@ -67,8 +69,9 @@ class IBlockPropertyManager
             ['IBLOCK_ID' =>$iblockId]
         );
 
+        /** @var array $prop_fields */
         while ($prop_fields = $properties->GetNext()) {
-            $arResult[$prop_fields['CODE']] = $prop_fields;
+            $arResult[(string)$prop_fields['CODE']] = $prop_fields;
         }
 
         return $arResult;
@@ -80,10 +83,10 @@ class IBlockPropertyManager
      * @param string $iblockID - ID инфоблока
      *
      * @return mixed
+     * @psalm-suppress MixedMethodCall
      */
     public function getPropertiesIblockIDCached($iblockID)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         return CacherFacade::setCacheId($iblockID . '_getPropertiesIblockID')
             ->setCallback([$this, 'getPropertiesIblockID'])
             ->setCallbackParams($iblockID)

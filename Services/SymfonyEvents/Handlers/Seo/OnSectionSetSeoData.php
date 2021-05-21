@@ -37,7 +37,7 @@ class OnSectionSetSeoData implements BitrixComponentEventHandlerInterface
      */
     public function action($event): void
     {
-        if (empty($event->arResult())) {
+        if (!$event->arResult()) {
             return;
         }
 
@@ -54,18 +54,18 @@ class OnSectionSetSeoData implements BitrixComponentEventHandlerInterface
      *
      * @return string
      */
-    protected function title(ComponentEpilogEvent $event) : string
+    private function title(ComponentEpilogEvent $event) : string
     {
-        $arParams = $event->arParams();
+        $arParams = (array)$event->arParams();
 
-        if (!empty($GLOBALS['APPLICATION']->GetPageProperty('title'))) {
-            return $GLOBALS['APPLICATION']->GetPageProperty('title');
+        if ($GLOBALS['APPLICATION']->GetPageProperty('title')) {
+            return (string)$GLOBALS['APPLICATION']->GetPageProperty('title');
         }
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /** @var string $title */
         $title = IblockFacade::getNameByIdCached($arParams['IBLOCK_ID']);
 
-        return !empty($title) ? $title : '';
+        return $title ?: '';
     }
 
     /**
@@ -75,15 +75,15 @@ class OnSectionSetSeoData implements BitrixComponentEventHandlerInterface
      *
      * @return string
      */
-    protected function description(ComponentEpilogEvent $event) : string
+    private function description(ComponentEpilogEvent $event) : string
     {
-        $arParams = $event->arParams();
+        $arParams = (array)$event->arParams();
 
-        if (!empty($GLOBALS['APPLICATION']->GetPageProperty('description'))) {
-            return $GLOBALS['APPLICATION']->GetPageProperty('description');
+        if ($GLOBALS['APPLICATION']->GetPageProperty('description')) {
+            return (string)$GLOBALS['APPLICATION']->GetPageProperty('description');
         }
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /** @var string $description */
         $description = IblockFacade::getDescriptionByIdCached($arParams['IBLOCK_ID']);
 
         return !empty($description) ? $description :  '';

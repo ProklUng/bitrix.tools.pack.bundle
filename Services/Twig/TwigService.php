@@ -52,10 +52,10 @@ class TwigService
         Twig_Loader_Filesystem $loader,
         string $debug,
         string $cachePath,
-        array $twigOptions = null
+        ?array $twigOptions = null
     ) {
         $this->loader = $loader;
-        $this->twigOptions = $twigOptions;
+        $this->twigOptions = (array)$twigOptions;
         $this->debug = $debug;
         $this->cachePath = $cachePath;
 
@@ -85,6 +85,8 @@ class TwigService
      */
     public function getPaths() : array
     {
+        $this->twigOptions['paths'] = (array)$this->twigOptions['paths'];
+
         return $this->twigOptions['paths'] ?? [];
     }
 
@@ -117,7 +119,7 @@ class TwigService
      *
      * @return Twig_Environment
      */
-    protected function initTwig(
+    private function initTwig(
         Twig_Loader_Filesystem $loader,
         string $debug,
         string $cachePath

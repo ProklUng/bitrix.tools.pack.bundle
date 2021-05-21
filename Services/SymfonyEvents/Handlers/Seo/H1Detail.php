@@ -36,11 +36,11 @@ class H1Detail implements BitrixComponentEventHandlerInterface
      */
     public function action($event): void
     {
-        $arResult = $event->arResult();
+        $arResult = (array)$event->arResult();
+        $h1Value = (string)$arResult['PROPERTIES']['H1']['VALUE'];
 
-        $h1 = !empty($arResult['PROPERTIES']['H1']['VALUE']) ?
-            $arResult['PROPERTIES']['H1']['VALUE'] : $arResult['NAME'];
+        $h1 = $h1Value ?: (string)$arResult['NAME'];
 
-        $event->setResult($event->arResult(), 'H1', $h1);
+        $event->setResult($arResult, 'H1', $h1);
     }
 }

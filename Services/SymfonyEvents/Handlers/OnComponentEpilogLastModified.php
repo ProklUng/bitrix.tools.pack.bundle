@@ -38,9 +38,9 @@ class OnComponentEpilogLastModified implements BitrixComponentEventHandlerInterf
     public function action($event) : void
     {
         // LastModified.
-        if (empty($event->payload('timestamp'))
+        if (!$event->payload('timestamp')
             &&
-            empty($event->payload('timestamp_raw'))
+            !$event->payload('timestamp_raw')
         ) {
             return;
         }
@@ -51,7 +51,6 @@ class OnComponentEpilogLastModified implements BitrixComponentEventHandlerInterf
         $timestamp = !empty($event->payload('timestamp_raw')) ?
             $event->payload('timestamp_raw') : MakeTimeStamp($event->payload('timestamp'));
 
-        /** @noinspection PhpUndefinedMethodInspection */
         // Установить timestamp.
         LastModifiedFacade::add(
             $salt,
