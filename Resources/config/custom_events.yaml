@@ -9,12 +9,6 @@ services:
     autoconfigure: true
     public: true
 
-  custom.event.dispatcher:
-    class: Local\Util\SymfonyEvents\Events
-    arguments:
-      - '@event_dispatcher'
-      - !tagged_iterator bitrix.component.event
-
   Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\Handlers\OnResultModifierSections:
     tags:
       - { name: bitrix.component.event }

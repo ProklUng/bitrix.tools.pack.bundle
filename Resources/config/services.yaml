@@ -48,3 +48,9 @@ services:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Cache\LegacyCacher
     arguments: ['@bitrix_ordinary_tools.bitrix_cacher']
 
+  bitrix_ordinary_tools.custom_event_dispatcher:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\SymfonyEvents\CustomEvents
+    arguments:
+      - '@event_dispatcher'
+      - !tagged_iterator bitrix.component.event
+
