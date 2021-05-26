@@ -23,4 +23,5 @@ services:
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\ApplicationD7: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CMain: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CUser: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\EventMail: ~
 

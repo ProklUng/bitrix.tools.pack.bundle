@@ -24,6 +24,8 @@ services:
 
   Prokl\BitrixOrdinaryToolsBundle\Services\Application\BitrixGlobals: ~
 
+  Bitrix\Main\Mail\Event: ~
+
   # $APPLICATION
   application.instance:
     class: CMain
@@ -74,3 +76,9 @@ services:
       - '@event_dispatcher'
       - !tagged_iterator bitrix.component.event
 
+  # Доступ к bitrix/.settings.php.
+  # Параметры: connections.default.host (ключи разделены точками) или connections.
+  bx.config:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Utils\Config\Manager
+
+  Prokl\BitrixOrdinaryToolsBundle\Services\Utils\Config\Manager: '@bx.config'
