@@ -24,19 +24,6 @@ services:
 
   Prokl\BitrixOrdinaryToolsBundle\Services\Application\BitrixGlobals: ~
 
-  # Bitrix D7 entities
-  Bitrix\Main\Mail\Event: ~
-  Bitrix\Main\UserTable: ~
-  Bitrix\Iblock\Iblock: ~
-  Bitrix\Iblock\ElementTable: ~
-  Bitrix\Iblock\ElementPropertyTable: ~
-  Bitrix\Iblock\PropertyTable: ~
-  Bitrix\Iblock\SectionElementTable: ~
-  Bitrix\Iblock\SectionPropertyTable: ~
-  Bitrix\Iblock\IblockFieldTable: ~
-  Bitrix\Iblock\IblockGroupTable: ~
-  Bitrix\Iblock\SiteTable: ~
-
   # $APPLICATION
   application.instance:
     class: CMain
@@ -60,6 +47,19 @@ services:
   bitrix_ordinary_tools.cfile_wrapper:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Utils\CFileWrapper
     arguments: ['@bitrix_ordinary_tools.cfile']
+
+  # Bitrix D7 entities
+  Bitrix\Main\Mail\Event: ~
+  Bitrix\Main\UserTable: ~
+  Bitrix\Iblock\Iblock: ~
+  Bitrix\Iblock\ElementTable: ~
+  Bitrix\Iblock\ElementPropertyTable: ~
+  Bitrix\Iblock\PropertyTable: ~
+  Bitrix\Iblock\SectionElementTable: ~
+  Bitrix\Iblock\SectionPropertyTable: ~
+  Bitrix\Iblock\IblockFieldTable: ~
+  Bitrix\Iblock\IblockGroupTable: ~
+  Bitrix\Iblock\SiteTable: ~
 
   iblock.element.manager:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Iblock\IblockElementManager
@@ -98,3 +98,8 @@ services:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Utils\LoaderContent
 
   Prokl\BitrixOrdinaryToolsBundle\Services\Utils\LoaderContent: '@loader.content'
+
+  # Работа с почтовыми событиями.
+  Prokl\BitrixOrdinaryToolsBundle\Services\Email\SendNotification:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\SendNotification
+    arguments: ['@Bitrix\Main\Mail\Event', '@bitrix_ordinary_tools.cfile']

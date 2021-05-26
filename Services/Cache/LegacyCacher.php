@@ -231,7 +231,6 @@ final class LegacyCacher
         return $this;
     }
 
-
     /**
      * Задать текущий URL.
      *
