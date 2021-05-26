@@ -23,6 +23,6 @@ class CMain extends AbstractFacade
      */
     protected static function getFacadeAccessor() : string
     {
-        return 'CMain';
+        return 'bitrix_ordinary_tools.cmain';
     }
 }

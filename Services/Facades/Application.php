@@ -23,6 +23,6 @@ class Application extends AbstractFacade
      */
     protected static function getFacadeAccessor() : string
     {
-        return 'Bitrix\Main\Application';
+        return 'application.instance';
     }
 }

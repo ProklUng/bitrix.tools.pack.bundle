@@ -4,13 +4,27 @@ services:
     autoconfigure: true
     public: true
 
+  # Битриксовый CIBlockElement
   bitrix_ordinary_tools.ciblockelement:
     public: false
     class: CIBlockElement
 
+  # Битриксовый CFile
   bitrix_ordinary_tools.cfile:
     public: false
     class: CFile
+
+  # Битриксовый CUser
+  bitrix_ordinary_tools.cuser:
+    class: CUser
+
+  # Битриксовый CMain
+  bitrix_ordinary_tools.cmain:
+    class: CMain
+
+  bitrix_ordinary_tools.application_d7:
+    factory: ['Bitrix\Main\Application', 'getInstance']
+    class: CMain
 
   # Битриксовый кэшер
   bitrix_ordinary_tools.bitrix_cacher:
@@ -19,6 +33,7 @@ services:
 
   Prokl\BitrixOrdinaryToolsBundle\Services\Application\GetApplication: ~
 
+  # $APPLICATION
   application.instance:
     class: CMain
     factory: ['@Prokl\BitrixOrdinaryToolsBundle\Services\Application\GetApplication', 'instance']

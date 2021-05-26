@@ -36,6 +36,6 @@ class CUser extends AbstractFacade
      */
     protected static function getFacadeAccessor() : string
     {
-        return 'CUser';
+        return 'bitrix_ordinary_tools.cuser';
     }
 }

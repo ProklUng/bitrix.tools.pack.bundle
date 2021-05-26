@@ -20,6 +20,7 @@ services:
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\IblockElementFacade: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\ComponentEventDispatcherFacade: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\Application: ~
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\ApplicationD7: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CMain: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CUser: ~
 
