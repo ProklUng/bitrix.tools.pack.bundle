@@ -22,21 +22,26 @@ services:
   bitrix_ordinary_tools.cmain:
     class: CMain
 
-  bitrix_ordinary_tools.application_d7:
-    factory: ['Bitrix\Main\Application', 'getInstance']
+  Prokl\BitrixOrdinaryToolsBundle\Services\Application\BitrixGlobals: ~
+
+  # $APPLICATION
+  application.instance:
     class: CMain
+    factory: ['@Prokl\BitrixOrdinaryToolsBundle\Services\Application\BitrixGlobals', 'instance']
+
+  bitrix_ordinary_tools.application_d7:
+    factory: ['@Prokl\BitrixOrdinaryToolsBundle\Services\Application\BitrixGlobals', 'instanceD7']
+    class: Bitrix\Main\Application
+
+  # Битриксовый EventManager
+  bitrix_ordinary_tools.event_manager:
+    factory: ['@Prokl\BitrixOrdinaryToolsBundle\Services\Application\BitrixGlobals', 'eventManager']
+    class: Bitrix\Main\EventManager
 
   # Битриксовый кэшер
   bitrix_ordinary_tools.bitrix_cacher:
     public: false
     class: CPHPCache
-
-  Prokl\BitrixOrdinaryToolsBundle\Services\Application\GetApplication: ~
-
-  # $APPLICATION
-  application.instance:
-    class: CMain
-    factory: ['@Prokl\BitrixOrdinaryToolsBundle\Services\Application\GetApplication', 'instance']
 
   # Обертка над CFile.
   bitrix_ordinary_tools.cfile_wrapper:
