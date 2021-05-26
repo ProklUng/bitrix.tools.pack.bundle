@@ -82,3 +82,8 @@ services:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Utils\Config\Manager
 
   Prokl\BitrixOrdinaryToolsBundle\Services\Utils\Config\Manager: '@bx.config'
+
+  loader.content:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Utils\LoaderContent
+
+  Prokl\BitrixOrdinaryToolsBundle\Services\Utils\LoaderContent: '@loader.content'
