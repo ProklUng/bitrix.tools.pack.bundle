@@ -24,7 +24,18 @@ services:
 
   Prokl\BitrixOrdinaryToolsBundle\Services\Application\BitrixGlobals: ~
 
+  # Bitrix D7 entities
   Bitrix\Main\Mail\Event: ~
+  Bitrix\Main\UserTable: ~
+  Bitrix\Iblock\Iblock: ~
+  Bitrix\Iblock\ElementTable: ~
+  Bitrix\Iblock\ElementPropertyTable: ~
+  Bitrix\Iblock\PropertyTable: ~
+  Bitrix\Iblock\SectionElementTable: ~
+  Bitrix\Iblock\SectionPropertyTable: ~
+  Bitrix\Iblock\IblockFieldTable: ~
+  Bitrix\Iblock\IblockGroupTable: ~
+  Bitrix\Iblock\SiteTable: ~
 
   # $APPLICATION
   application.instance:
