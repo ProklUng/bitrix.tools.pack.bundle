@@ -4,6 +4,7 @@ services:
     autoconfigure: true
     public: true
 
+  Prokl\BitrixOrdinaryToolsBundle\Services\Facades\Container: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\LastModifiedFacade: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CFileFacade: ~
   Prokl\BitrixOrdinaryToolsBundle\Services\Facades\TimestampFacade: ~
