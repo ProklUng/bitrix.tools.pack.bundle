@@ -16,13 +16,13 @@ class IBlockSectionManager
     /**
      * Имя раздела инфоблока или пустую строку.
      *
-     * @param integer $iSectionID ИД раздела инфоблока.
+     * @param integer $idSection ИД раздела инфоблока.
      *
      * @return string
      */
-    public function getSBlockSectionNameByID(int $iSectionID): string
+    public function getSBlockSectionNameByID(int $idSection): string
     {
-        $obBlockResult = CIBlockSection::GetByID($iSectionID);
+        $obBlockResult = CIBlockSection::GetByID($idSection);
 
         if ($arSection = $obBlockResult->GetNext()) {
             return $arSection['NAME'];

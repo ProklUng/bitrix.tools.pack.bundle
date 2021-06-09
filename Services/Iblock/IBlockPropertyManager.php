@@ -10,6 +10,7 @@ use Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CacherFacade;
 /**
  * Class IBlockPropertyManager
  * @package Prokl\BitrixOrdinaryToolsBundle\Services\Iblock
+ *
  */
 class IBlockPropertyManager
 {

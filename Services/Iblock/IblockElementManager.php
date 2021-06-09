@@ -71,7 +71,6 @@ class IblockElementManager
         array $arParams = ['AR_ORDER', 'AR_FILTER', 'NAV_PARAMS', 'AR_GROUP', 'AR_SELECT'],
         bool $bDisableProperties = false
     ) : array {
-        /** @noinspection PhpUndefinedMethodInspection */
         return CacherFacade::setCacheId(md5(serialize(array_values($arParams))))
             ->setCallback([$this, 'getIBlockElements'])
             ->setCallbackParams($arParams, $bDisableProperties)
