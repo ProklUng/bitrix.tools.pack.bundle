@@ -2,6 +2,7 @@
 
 namespace Prokl\BitrixOrdinaryToolsBundle\Services\Iblock;
 
+use Bitrix\Iblock\IblockTable;
 use Bitrix\Main\ArgumentException;
 use CFile;
 use CIBlock;
@@ -13,88 +14,57 @@ use Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CacherFacade;
  */
 class IblockManager
 {
+    /**
+     * @var integer $defaultCacheTTl Время жизни кэша по умолчанию.
+     */
+    private $defaultCacheTTl = 86400;
+
     /** ID инфоблока по коду.
      *
      * @param string $iblockType Тип инфоблока.
      * @param string $iblockCode Код инфоблока.
      * @return mixed
      *
-     * @throws ArgumentException
+     * @throws ArgumentException Когда инфоблок не найден.
      */
-    public function getIBlockIdByCode(string $iblockType, string $iblockCode)
+    public function getIBlockIdByCode(string $iblockType, string $iblockCode) : int
     {
-        $res = CIBlock::GetList(
-            [],
-            ['ACTIVE' => 'Y', 'TYPE' => $iblockType, 'CODE' => $iblockCode]
-        );
-        $arResult = $res->Fetch();
-        if ($arResult['ID'] > 0) {
-            return $arResult['ID'];
+        $iBlockTable = IblockTable::getList([
+            'select' => ['ID'],
+            'filter' => ['=CODE' => $iblockCode, "=TYPE" => $iblockType],
+            'cache' => ['ttl' => $this->defaultCacheTTl],
+        ]);
+
+        if ($iblockData = $iBlockTable->fetch()) {
+            return (int)$iblockData['ID'];
         }
 
         throw new ArgumentException('Инфоблок '.$iblockCode.' не найден', $iblockCode);
     }
 
     /**
-     * ID инфоблока по его коду из кэша.
-     *
-     * @param string $sIBlockType Тип инфоблока.
-     * @param string $sIBlockCode Код инфоблока.
-     *
-     * @return integer
-     */
-    public function getIBlockIdByCodeCached(string $sIBlockType, string $sIBlockCode)
-    {
-        $cacher = CacherFacade::setCacheId($sIBlockType . $sIBlockCode)
-                               ->setCallback([$this, 'getIBlockIdByCode'])
-                               ->setCallbackParams($sIBlockType, $sIBlockCode)
-                               ->setTtl(604800);
-
-
-        return $cacher->returnResultCache();
-    }
-
-    /**
      * Описание инфоблока.
      *
-     * @param string $typeIblock
-     * @param string $codeIblock
+     * @param string $iblockType Тип инфоблока.
+     * @param string $iblockCode Код инфоблока.
+     *
      * @return mixed
-     * @throws ArgumentException
+     * @throws ArgumentException Когда инфоблок не найден.
      */
-    public function getIBlockDescriptionByCode(string $typeIblock, string $codeIblock)
+    public function getIBlockDescriptionByCode(string $iblockType, string $iblockCode)
     {
-        $res = CIBlock::GetList(
-            [],
-            ['ACTIVE' => 'Y', 'TYPE' => $typeIblock, 'CODE' => $codeIblock]
-        );
+        $iBlockTable = IblockTable::getList([
+            'select' => ['ID', 'DESCRIPTION'],
+            'filter' => ['=ACTIVE' => 'Y', '=CODE' => $iblockCode, "=TYPE" => $iblockType],
+            'cache' => ['ttl' => $this->defaultCacheTTl],
+        ]);
 
-        $arResult = $res->Fetch();
+        $arResult = $iBlockTable->Fetch();
         if ($arResult['ID'] > 0) {
             return $arResult['DESCRIPTION'];
         }
 
-        throw new ArgumentException('Инфоблок '.$codeIblock.' не найден', $codeIblock);
-    }
-
-    /**
-     * Описание инфоблока по его коду из кэша.
-     *
-     * @param string $sIBlockType  Тип инфоблока.
-     * @param string $sIBlockCode  Код инфоблока.
-     *
-     * @return string
-     */
-    public function getIBlockDescriptionByCodeCached($sIBlockType, $sIBlockCode)
-    {
-        /** @noinspection PhpUndefinedMethodInspection */
-        $cacher = CacherFacade::setCacheId('iblockDescription'.$sIBlockType . $sIBlockCode)
-            ->setCallback([$this, 'getIBlockDescriptionByCode'])
-            ->setCallbackParams($sIBlockType, $sIBlockCode)
-            ->setTtl(604800);
-
-
-        return $cacher->returnResultCache();
+        throw new ArgumentException('Инфоблок '.$iblockCode.' не найден', $iblockCode);
     }
 
     /**
@@ -120,7 +90,6 @@ class IblockManager
      */
     public function getDescriptionByIdCached(int $iblockId) : string
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $cacher = CacherFacade::setCacheId('iblockDescription' . $iblockId)
             ->setCallback([$this, 'getDescriptionById'])
             ->setCallbackParams($iblockId)
@@ -152,7 +121,6 @@ class IblockManager
      */
     public function getNameByIdCached(int $iblockId) : string
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $cacher = CacherFacade::setCacheId('iblockName' . $iblockId)
             ->setCallback([$this, 'getNameById'])
             ->setCallbackParams($iblockId)
@@ -212,7 +180,6 @@ class IblockManager
      */
     public function getIblockUrlByCodeCached($sIBlockType, $sIBlockCode)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $cacher = CacherFacade::setCacheId('iblockurl'.$sIBlockType . $sIBlockCode)
             ->setCallback([$this, 'getIblockUrlByCode'])
             ->setCallbackParams($sIBlockType, $sIBlockCode)
@@ -300,5 +267,13 @@ class IblockManager
         $arData = CIBlock::GetArrayByID($iblockId);
 
         return $arData[$field];
+    }
+
+    /**
+     * @param integer $defaultCacheTTl
+     */
+    public function setCacheTTl(int $defaultCacheTTl): void
+    {
+        $this->defaultCacheTTl = $defaultCacheTTl;
     }
 }
