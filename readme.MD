@@ -43,3 +43,31 @@ composer require proklung/bitrix-tools-pack-bundle
 - `Prokl\BitrixOrdinaryToolsBundle\Services\Facades\CUser` - `CFile`
 - `Prokl\BitrixOrdinaryToolsBundle\Services\Facades\EventManager` - `Bitrix\Main\EventManager`
 - `Prokl\BitrixOrdinaryToolsBundle\Services\Facades\EventMail` - `Bitrix\Main\Mail\Event`
+
+## Логгеры
+
+- `Prokl\BitrixOrdinaryToolsBundle\Services\Logger\EventLogLogger` - monolog-логгер для записи логов 
+в журнал событий /bitrix/admin/event_log.php?lang=ru.
+
+Конфигурация Monolog Bundle:
+
+```yaml
+monolog:
+  handlers:
+    myHandler:
+      type: service
+      id:  Prokl\BitrixOrdinaryToolsBundle\Services\Logger\EventLogLogger
+      level: error
+```
+
+Использование:
+
+```php
+        use Monolog\Logger;
+        /** @var Logger $logger */
+        $logger = container()->get('public_logger');
+        $logger->error(
+            'Testing',
+            ['context' => 'OK', 'MODULE_ID' => 'My module', 'ITEM_ID' => get_class($this)]
+        );
+```

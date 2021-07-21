@@ -1,0 +1,17 @@
+###########
+# Логгеры
+###########
+
+services:
+  # конфигурация по умолчанию в *этом* файле
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  bitrix_ordinary_tools.logger_event_table:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Logger\EventLogLogger
+    tags:
+      - { name: monolog.logger }
+
+  Prokl\BitrixOrdinaryToolsBundle\Services\Logger\EventLogLogger: '@bitrix_ordinary_tools.logger_event_table'

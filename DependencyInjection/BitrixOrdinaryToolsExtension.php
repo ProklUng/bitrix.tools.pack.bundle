@@ -33,6 +33,7 @@ class BitrixOrdinaryToolsExtension extends Extension
         $loader->load('services.yaml');
         $loader->load('seo.yaml');
         $loader->load('image_resizer.yaml');
+        $loader->load('loggers.yaml');
 
         if (!class_exists('Prokl\CustomFrameworkExtensionsBundle\DependencyInjection\CustomFrameworkExtensionsExtension')) {
             throw new LogicException(
