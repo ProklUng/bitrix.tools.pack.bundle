@@ -106,3 +106,6 @@ services:
 
   Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridge:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridge
+
+  Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeSms:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeSms
