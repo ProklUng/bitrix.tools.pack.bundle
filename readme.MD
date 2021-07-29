@@ -92,6 +92,13 @@ monolog:
 
 ### Отправка битриксового события согласно channel_policy
 
+При условии `channel_policy` в конфиге `framework.yaml`:
+
+```yaml
+                'channel_policy':
+                    medium:  ['email', 'chat/telegram'],
+``` 
+
 ```php
         use Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixPolicySender;
         use Symfony\Component\Notifier\Notification\Notification;;
