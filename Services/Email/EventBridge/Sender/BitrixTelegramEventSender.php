@@ -5,6 +5,7 @@ namespace Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender;
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
+use League\HTMLToMarkdown\HtmlConverter;
 use Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeMail;
 use Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Utils\EventTableUpdater;
 use RuntimeException;
@@ -81,7 +82,12 @@ class BitrixTelegramEventSender
         foreach ($eventsInfo as $eventInfo) {
             $compileData = $this->eventBridge->compileMessage($eventInfo, $arFields, ['s1']);
 
-            $notification = (new ChatMessage($compileData['subject'] . ' ' . $compileData['body']))
+            $content = $compileData['subject'] . ' ' . $compileData['body'];
+
+            $converter = new HtmlConverter(['remove_nodes' => 'span div']);
+            $markdown = $converter->convert($content);
+
+            $notification = (new ChatMessage($markdown))
                             ->transport('telegram');
 
             $telegramOptions = (new TelegramOptions())

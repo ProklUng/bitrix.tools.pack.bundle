@@ -26,7 +26,8 @@
         "symfony/config": "~4|~5",
         "intervention/image": "^2.5",
         "twig/twig": "~1.0 | ~2.0",
-        "monolog/monolog": "~1 || ~2"
+        "monolog/monolog": "~1 || ~2",
+        "league/html-to-markdown": "^5.0"
     },
     "require-dev": {
         "proklung/bitrix-phpunit-testing-tools": "^1.0"
