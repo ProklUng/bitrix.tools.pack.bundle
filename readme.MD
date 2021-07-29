@@ -90,6 +90,23 @@ monolog:
 
 Ошибки отправки не глушатся. Если что-то пойдет не так, то выбросится исключение.
 
+### Отправка битриксового события согласно channel_policy
+
+```php
+        use Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixPolicySender;
+        use Symfony\Component\Notifier\Notification\Notification;;
+    
+        /** @var BitrixPolicySender $bitrixEventHandler */ 
+        $bitrixEventHandler = container()->get('notifier_bitrix_event_sender.policy');
+
+        // Массив, идентичный с параметром fields при отправке Битриксом сообщений
+        // См. https://dev.1c-bitrix.ru/api_help/main/reference/cevent/send.php 
+        $arFields = ['NAME' => 'testing email', 'EMAIL' => 'recipitient@gmail.com'];
+
+        // Будет оправлено сообщение в канал email и сделана запись в таблице b_event.
+        $bitrixEventHandler->send('CODE_MAIL_EVENT', $arFields, Notification::IMPORTANCE_MEDIUM);
+```
+
 ### Использование битриксовых SMS событий и их шаблонов
 
 ```php

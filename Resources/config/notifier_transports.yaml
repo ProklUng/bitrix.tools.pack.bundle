@@ -11,6 +11,13 @@ services:
       - '@Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeMail'
       - '@notifier'
 
+  # Отправка битриксового события согласно channel policy.
+  notifier_bitrix_event_sender.policy:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixPolicySender
+    arguments:
+      - '@Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeMail'
+      - '@notifier'
+
   # Отправка битриксового события по sms.
   notifier_bitrix_event_sender.sms:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixSmsSender
