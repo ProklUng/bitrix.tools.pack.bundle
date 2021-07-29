@@ -8,14 +8,15 @@ use Bitrix\Main\Mail\Internal\EventMessageAttachmentTable;
 use Bitrix\Main\Mail\Internal\EventMessageTable;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
+use Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\DTO\EventInfo;
 
 /**
- * Class EventBridge
+ * Class EventBridgeMail
  * @package Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge
  *
  * @since 28.07.2021
  */
-class EventBridge
+class EventBridgeMail
 {
     /**
      * Получить скомпилированный текст письма для события.

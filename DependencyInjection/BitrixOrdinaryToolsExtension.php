@@ -8,6 +8,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Notifier\NotifierInterface;
 
 /**
  * Class BitrixOrdinaryToolsExtension
@@ -34,6 +35,11 @@ class BitrixOrdinaryToolsExtension extends Extension
         $loader->load('seo.yaml');
         $loader->load('image_resizer.yaml');
         $loader->load('loggers.yaml');
+
+        $loader->load('notifier.yaml');
+        if (class_exists(NotifierInterface::class)) {
+            $loader->load('notifier_transports.yaml');
+        }
 
         if (!class_exists('Prokl\CustomFrameworkExtensionsBundle\DependencyInjection\CustomFrameworkExtensionsExtension')) {
             throw new LogicException(

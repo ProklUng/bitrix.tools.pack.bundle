@@ -103,9 +103,3 @@ services:
   Prokl\BitrixOrdinaryToolsBundle\Services\Email\SendNotification:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\SendNotification
     arguments: ['@Bitrix\Main\Mail\Event', '@bitrix_ordinary_tools.cfile']
-
-  Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridge:
-    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridge
-
-  Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeSms:
-    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeSms

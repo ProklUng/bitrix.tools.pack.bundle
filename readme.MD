@@ -71,3 +71,61 @@ monolog:
             ['context' => 'OK', 'MODULE_ID' => 'My module', 'ITEM_ID' => get_class($this)]
         );
 ```
+
+## Использование битриксовых почтовых событий и их шаблонов
+
+```php
+        use Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixMailEventSender;
+    
+        /** @var BitrixMailEventSender $bitrixEventHandler */ 
+        $bitrixEventHandler = container()->get('notifier_bitrix_event_sender.mail');
+
+        // Массив, идентичный с параметром fields при отправке Битриксом сообщений
+        // См. https://dev.1c-bitrix.ru/api_help/main/reference/cevent/send.php 
+        $arFields = ['NAME' => 'testing email', 'EMAIL' => 'recipitient@gmail.com'];
+
+        // Будет оправлено сообщение в канал email и сделана запись в таблице b_event.
+        $bitrixEventHandler->send('CODE_MAIL_EVENT', $arFields);
+```
+
+Ошибки отправки не глушатся. Если что-то пойдет не так, то выбросится исключение.
+
+### Использование битриксовых SMS событий и их шаблонов
+
+```php
+        use Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixSmsSender;
+
+        /** @var BitrixSmsSender $bitrixEventHandler */ 
+        $bitrixEventHandler = container()->get('notifier_bitrix_event_sender.sms');
+        // Массив, идентичный с параметром fields при отправке Битриксом сообщений
+        $arFields = [
+                'SENDER' => 'test', 'RECEIVER' => '+7926111111', 
+                'USER_PHONE' => '+7926111111', 'CODE' => '123'
+        ];
+
+        // Будет оправлено SMS и сделана запись в таблице b_event.
+        $bitrixEventHandler->send('SMS_USER_RESTORE_PASSWORD', $arFields);
+```
+
+Ошибки отправки глушатся. Если что-то с доставкой SMS пойдет не так, то будет тихо, но в таблице `b_event`
+появится запись с признаком неудачи и текстом ошибки.
+
+### Отправка битриксовых почтовых шаблонов в Телеграм
+
+```php
+        use Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixTelegramEventSender;
+
+        /** @var BitrixTelegramEventSender $bitrixEventHandler */ 
+        $bitrixEventHandler = container()->get('notifier_bitrix_event_sender.telegram');
+
+        $arFields = ['CODE' => '2222', 'LINK' => 'http://site.loc/'];
+
+        $bitrixEventHandler->send('TEST_EVENT', $arFields);
+```
+
+Должен быть установлен `symfony/telegram-notifier` и зарегистрирован транспорт `telegram`.
+
+Нюанс:
+
+- Telegram плохо переваривает html (даже в режиме `parse_mode = html`). Посему рекомендуется оформлять шаблоны 
+в `markdown` разметке.

@@ -1,0 +1,26 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  # Отправка битриксового события через почту.
+  notifier_bitrix_event_sender.mail:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixMailEventSender
+    arguments:
+      - '@Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeMail'
+      - '@notifier'
+
+  # Отправка битриксового события по sms.
+  notifier_bitrix_event_sender.sms:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixSmsSender
+    arguments:
+      - '@Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeSms'
+      - '@texter'
+
+  # Отправка битриксового события в Телеграм.
+  notifier_bitrix_event_sender.telegram:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\Sender\BitrixTelegramEventSender
+    arguments:
+      - '@Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeMail'
+      - '@chatter'

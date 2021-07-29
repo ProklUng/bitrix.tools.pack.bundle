@@ -1,11 +1,11 @@
 <?php
 
-namespace Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge;
+namespace Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\DTO;
 
 /**
  * Class EventInfo
  * DTO с информацией о шаблоне битриксового события.
- * @package Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge
+ * @package Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\DTO
  *
  * @since 28.07.2021
  */

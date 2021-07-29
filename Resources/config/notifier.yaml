@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeMail:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeMail
+
+  Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeSms:
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Email\EventBridge\EventBridgeSms
