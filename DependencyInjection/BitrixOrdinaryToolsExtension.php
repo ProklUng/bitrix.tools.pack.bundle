@@ -8,6 +8,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
 
@@ -44,7 +45,7 @@ class BitrixOrdinaryToolsExtension extends Extension
 
         // Битриксовый транспорт для Messenger подключается только
         // если Messenger в наличии.
-        if (class_exists(SenderInterface::class)) {
+        if (class_exists(Envelope::class)) {
             $loader->load('bitrix_transport.yaml');
         }
 
