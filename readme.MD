@@ -153,3 +153,54 @@ monolog:
 
 - Telegram плохо переваривает html (даже в режиме `parse_mode = html`). Посему под капотом html шаблона превращается в markdown
 разметку.
+
+### Отправка сообщений о фатальных ошибках на проекте согласно channel-policy нотификатора
+
+`/bitrix/.settings.php`:
+
+Работает при условии установки [бандла](https://github.com/ProklUng/core.framework.extension.bundle).
+
+```php
+use Symfony\Component\Notifier\Notification\Notification;
+
+return [
+    'exception_handling' =>
+        array(
+            'value' =>
+                array(
+                    'debug' => env('DEBUG', false),
+                    'handled_errors_types' => 4437,
+                    'exception_errors_types' => 4437,
+                    'ignore_silence' => false,
+                    'assertion_throws_exception' => true,
+                    'assertion_error_type' => 256,
+                    'log' => array (
+                        'class_name' => \Prokl\BitrixOrdinaryToolsBundle\Services\ErrorHandler\ErrorHandler::class,
+                        'required_file' => 'vendor/proklung/bitrix-tools-pack-bundle/Services/ErrorHandler/Entity/ErrorLogTable.php',
+                        'settings' => array (
+                            'types' => [
+                                \Bitrix\Main\Diag\ExceptionHandlerLog::UNCAUGHT_EXCEPTION,
+                                \Bitrix\Main\Diag\ExceptionHandlerLog::IGNORED_ERROR,
+                                \Bitrix\Main\Diag\ExceptionHandlerLog::FATAL,
+                            ],
+                            // Получатель почты; перебивает параметры родительского модуля
+                            'recipient' => 'email@gmail.com',
+                            // Или какой-нибудь иной способ различения dev/prod среды
+                            // По умолчанию - dev
+                            'env' => env('DEBUG', false) ? 'dev' : 'prod',
+                            // В каком окружении работать. По умолчанию - prod.
+                            'allowed_env' => ['dev', 'prod'],
+                            // Уровень важности согласно channel_policy (см. документацию к модулю proklung.notifier)
+                            // По умолчанию - urgent
+                            'importancy' => Notification::IMPORTANCE_URGENT,
+                        ),
+                    ),
+                ),
+            'readonly' => false,
+        ),
+];
+```
+#### Нюансы
+
+1) Сообщение об ошибке рассылается всего один раз (иначе чревато флудом). Каждые сутки таблица с информацией 
+об отправленных уведомлениях очищается посредством агента. Процесс начинается по новой.
