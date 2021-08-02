@@ -10,6 +10,7 @@ use Bitrix\Main\ORM\Query\Query;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Type\DateTime;
 use Exception;
+use Prokl\BitrixOrdinaryToolsBundle\Services\Messenger\Bitrix\Entity\MessageTable;
 use Symfony\Component\Messenger\Exception\InvalidArgumentException;
 use Symfony\Component\Messenger\Exception\TransportException;
 use Throwable;
