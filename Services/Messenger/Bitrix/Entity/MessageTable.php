@@ -22,7 +22,7 @@ class MessageTable extends DataManager
      */
     public static function getTableName(): string
     {
-        return 'symfony_messanger_queue_message';
+        return 'symfony_messenger_queue_message';
     }
 
     /**
