@@ -120,15 +120,17 @@ class ErrorHandler extends ExceptionHandlerLog
         $notifier = $this->getNotifier();
         $importancy = $this->options['importancy'];
 
-        $emails = container()->getParameter('mailer_recipients');
-        if (!$emails) {
-            throw new RuntimeException('Email of recipitients not setting.');
-        }
-
         $email = $emails[0];
 
         if ($this->options['recipient']) {
             $email = (string)$this->options['recipient'];
+        }
+
+        if (!$email) {
+            $emails = container()->getParameter('mailer_recipients');
+            if (!$emails) {
+                throw new RuntimeException('Email of recipitients not setting.');
+            }
         }
 
         $request = Application::getInstance()->getContext()->getRequest();

@@ -156,6 +156,8 @@ monolog:
 
 ### Отправка сообщений о фатальных ошибках на проекте согласно channel-policy нотификатора
 
+Symfony Notifier должен быть сконфигурирован в `framework.yaml`.
+
 `/bitrix/.settings.php`:
 
 Работает при условии установки [бандла](https://github.com/ProklUng/core.framework.extension.bundle).
