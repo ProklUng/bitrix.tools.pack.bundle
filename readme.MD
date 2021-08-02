@@ -176,7 +176,7 @@ return [
                     'assertion_error_type' => 256,
                     'log' => array (
                         'class_name' => \Prokl\BitrixOrdinaryToolsBundle\Services\ErrorHandler\ErrorHandler::class,
-                        'required_file' => 'vendor/proklung/bitrix-tools-pack-bundle/Services/ErrorHandler/Entity/ErrorLogTable.php',
+                        'required_file' => 'vendor/proklung/bitrix-tools-pack-bundle/Services/ErrorHandler/ErrorHandler/ErrorHandler.php',
                         'settings' => array (
                             'types' => [
                                 \Bitrix\Main\Diag\ExceptionHandlerLog::UNCAUGHT_EXCEPTION,
