@@ -5,7 +5,7 @@
 
 ***INTERNAL***
 
-## Установка
+##Установка
 
 composer.json:
 
@@ -22,7 +22,7 @@ composer.json:
 composer require proklung/bitrix-tools-pack-bundle
 ``` 
  
-## Трэйты для миграций
+##Трэйты для миграций
 
 - `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\ClearCacheTrait` - очищает все виды кэша
 - `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\EmailEventTrait` - создает новый тип почтовых событий
@@ -206,3 +206,28 @@ return [
 
 1) Сообщение об ошибке рассылается всего один раз (иначе чревато флудом). Каждые сутки таблица с информацией 
 об отправленных уведомлениях очищается посредством агента. Процесс начинается по новой.
+
+### Транспорт для Symfony Messenger посредством Битрикс D7
+
+Форкнуто из [модуля](https://github.com/bsidev/bitrix-queue).
+
+`framework.yaml`:
+
+```yaml
+  messenger:
+    enabled: true
+    transports:
+      async: "%env(MESSENGER_TRANSPORT_DSN)%"
+      bitrix: 'bitrix://default?queue_name=messages'
+    routing:
+      'Local\Services\Messanger\SmsNotification': bitrix
+
+```
+
+Consume:
+
+```bash
+
+php bin/console messenger:consume bitrix
+
+```

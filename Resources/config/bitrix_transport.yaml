@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  # Транспорт для Messenger через Битрикс D7.
+  messenger.transport.bitrix.factory:
+    public: true
+    autoconfigure: false
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Messenger\Bitrix\BitrixTransportFactory
+    tags: ['messenger.transport_factory']

@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
 
 /**
  * Class BitrixOrdinaryToolsExtension
@@ -39,6 +40,12 @@ class BitrixOrdinaryToolsExtension extends Extension
         $loader->load('notifier.yaml');
         if (class_exists(NotifierInterface::class)) {
             $loader->load('notifier_transports.yaml');
+        }
+
+        // Битриксовый транспорт для Messenger подключается только
+        // если Messenger в наличии.
+        if (class_exists(SenderInterface::class)) {
+            $loader->load('bitrix_transport.yaml');
         }
 
         if (!class_exists('Prokl\CustomFrameworkExtensionsBundle\DependencyInjection\CustomFrameworkExtensionsExtension')) {
