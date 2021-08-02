@@ -20,7 +20,7 @@ class BitrixTransportFactory implements TransportFactoryInterface
     /**
      * BitrixTransportFactory конструктор
      */
-    public function constructor()
+    public function __construct()
     {
         // Создать кастомную таблицу, если еще не.
         if (!Application::getConnection()->isTableExists(
