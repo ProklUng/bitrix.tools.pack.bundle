@@ -2,9 +2,9 @@
 
 namespace Prokl\BitrixOrdinaryToolsBundle\Services\Twig;
 
+use Twig\Environment;
 use Twig\Error\LoaderError;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Class TwigService
@@ -16,12 +16,12 @@ use Twig_Loader_Filesystem;
 class TwigService
 {
     /**
-     * @var Twig_Environment Twig.
+     * @var Environment Twig.
      */
     private $twigEnvironment;
 
     /**
-     * @var Twig_Loader_Filesystem $loader Загрузчик Twig.
+     * @var FilesystemLoader $loader Загрузчик Twig.
      */
     private $loader;
 
@@ -43,13 +43,13 @@ class TwigService
     /**
      * TwigService constructor.
      *
-     * @param Twig_Loader_Filesystem $loader      Загрузчик.
-     * @param string                 $debug       Среда.
-     * @param string                 $cachePath   Путь к кэшу (серверный).
-     * @param array|null             $twigOptions Опции Твига.
+     * @param FilesystemLoader $loader      Загрузчик.
+     * @param string           $debug       Среда.
+     * @param string           $cachePath   Путь к кэшу (серверный).
+     * @param array|null       $twigOptions Опции Твига.
      */
     public function __construct(
-        Twig_Loader_Filesystem $loader,
+        FilesystemLoader $loader,
         string $debug,
         string $cachePath,
         ?array $twigOptions = null
@@ -69,9 +69,9 @@ class TwigService
     /**
      * Инстанс Твига.
      *
-     * @return Twig_Environment
+     * @return Environment
      */
-    public function instance() : Twig_Environment
+    public function instance() : Environment
     {
         return $this->twigEnvironment;
     }
@@ -113,19 +113,19 @@ class TwigService
     /**
      * Инициализация.
      *
-     * @param Twig_Loader_Filesystem $loader    Загрузчик.
-     * @param string                 $debug     Среда.
-     * @param string                 $cachePath Путь к кэшу (серверный).
+     * @param FilesystemLoader $loader    Загрузчик.
+     * @param string           $debug     Среда.
+     * @param string           $cachePath Путь к кэшу (серверный).
      *
-     * @return Twig_Environment
+     * @return Environment
      */
     private function initTwig(
-        Twig_Loader_Filesystem $loader,
+        FilesystemLoader $loader,
         string $debug,
         string $cachePath
-    ) : Twig_Environment {
+    ) : Environment {
 
-        return new Twig_Environment(
+        return new Environment(
             $loader,
             [
                 'debug' => (bool)$debug,

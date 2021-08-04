@@ -15,7 +15,7 @@ services:
 
   # Twig loader
   twig.loader:
-    class: Twig_Loader_Filesystem
+    class: Twig\Loader\FilesystemLoader
     arguments:
       - '%twig_paths%'
 
@@ -30,5 +30,13 @@ services:
 
   # Экземпляр Twig.
   twig.instance:
-    class: Twig_Environment
+    class: Twig\Environment
     factory: ['@twig', 'instance']
+
+  # Template cache warmer
+  Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TemplateCacheWarmer:
+    autoconfigure: false
+    arguments:
+      - '@twig.instance'
+    class:Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TemplateCacheWarmer
+    tags: [kernel.cache_warmer]
