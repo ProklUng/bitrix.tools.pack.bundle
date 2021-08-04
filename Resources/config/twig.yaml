@@ -38,5 +38,5 @@ services:
     autoconfigure: false
     arguments:
       - '@twig.instance'
-    class:Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TemplateCacheWarmer
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TemplateCacheWarmer
     tags: [kernel.cache_warmer]
