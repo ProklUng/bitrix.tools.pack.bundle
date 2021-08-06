@@ -38,9 +38,9 @@ final class WarmersConfiguratorCompilerPass implements CompilerPassInterface
         }
 
         // Нет в контейнере параметра warming_pages - прогрев только главной страницы.
-        if (!$container->hasParameter('warming_pages')) {
+        if ($container->hasParameter('warming_pages')) {
             $definition = $container->getDefinition('bitrix_ordinary_tools.bitrix_page_cache_warmer');
-            $definition->replaceArgument(2, ['/']);
+            $definition->replaceArgument(2, $container->getParameter('warming_pages'));
         }
    }
 }

@@ -23,6 +23,6 @@ services:
     arguments:
       - '@http_client'
       - '%kernel.site.host%'
-      - ['%warming_pages%']
+      - ['/']
     class: Prokl\BitrixOrdinaryToolsBundle\Services\CacheWarmer\BitrixCacheWarmer
     tags: [kernel.cache_warmer]

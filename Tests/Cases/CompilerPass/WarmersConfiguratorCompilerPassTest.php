@@ -87,7 +87,42 @@ class WarmersConfiguratorCompilerPassTest extends BaseTestCase
         $newDefinition = $this->container->getDefinition('bitrix_ordinary_tools.bitrix_page_cache_warmer');
         $newParam = $newDefinition->getArguments();
 
-        $this->assertSame(['/'], $newParam[2]);
+        $this->assertSame(['/xxx/'], $newParam[2]);
+    }
+
+    /**
+     * Задан параметр warming_pages.
+     *
+     * @return void
+     */
+    public function testHasPageParameters() : void
+    {
+        $this->container->setDefinition(
+            'http_client',
+            new Definition(get_class($this->fakeService))
+        );
+
+        $this->container->setParameter(
+            'warming_pages',
+            ['/page/']
+        );
+
+        $definition = new Definition(get_class($this->fakeService));
+        $definition->addArgument($this->container->getDefinition('http_client'));
+        $definition->addArgument('localhost');
+        $definition->addArgument(['/xxx/']);
+
+        $this->container->setDefinition(
+            'bitrix_ordinary_tools.bitrix_page_cache_warmer',
+            $definition
+        );
+
+        $this->obTestObject->process($this->container);
+
+        $newDefinition = $this->container->getDefinition('bitrix_ordinary_tools.bitrix_page_cache_warmer');
+        $newParam = $newDefinition->getArguments();
+
+        $this->assertSame(['/page/'], $newParam[2]);
     }
 
     /**
