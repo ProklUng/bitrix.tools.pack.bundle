@@ -235,7 +235,7 @@ php bin/console messenger:consume bitrix
 
 ### Прогреватели кэша
 
-Для команды `php bin/console cache:warm`
+Для команды `php bin/console cache:warmup`
 
 - ***RouterCacheWarm*** - прогрев кэша роутера (если таковой присутствует).
 
