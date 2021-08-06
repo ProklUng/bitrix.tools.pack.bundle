@@ -37,6 +37,7 @@ class BitrixOrdinaryToolsExtension extends Extension
         $loader->load('seo.yaml');
         $loader->load('image_resizer.yaml');
         $loader->load('loggers.yaml');
+        $loader->load('warmers.yaml');
 
         $loader->load('notifier.yaml');
         if (class_exists(NotifierInterface::class)) {

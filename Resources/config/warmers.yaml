@@ -1,0 +1,28 @@
+################
+# Cache warmers
+################
+
+services:
+  # конфигурация по умолчанию в *этом* файле
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  # Прогрев кэша роутера
+  bitrix_ordinary_tools.router_cache_warmer:
+    autoconfigure: false
+    arguments:
+      - '@router'
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\CacheWarmer\RouterCacheWarm
+    tags: [kernel.cache_warmer]
+
+  # Прогрев кэша сайта на Битриксе
+  bitrix_ordinary_tools.bitrix_page_cache_warmer:
+    autoconfigure: false
+    arguments:
+      - '@http_client'
+      - '%kernel.site.host%'
+      - ['%warming_pages%']
+    class: Prokl\BitrixOrdinaryToolsBundle\Services\CacheWarmer\BitrixCacheWarmer
+    tags: [kernel.cache_warmer]
