@@ -10,7 +10,7 @@ services:
     public: true
 
   _instanceof:
-    Twig_ExtensionInterface:
+    Twig\Extension\ExtensionInterface:
       tags: ['twig.extension']
 
   # Twig loader
