@@ -40,3 +40,10 @@ services:
       - '@twig.instance'
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TemplateCacheWarmer
     tags: [kernel.cache_warmer]
+
+  # Мигратор extensions в Твиг от maximaster.twig.tool.
+  Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigExtensionsBag:
+    arguments:
+      - !tagged_iterator twig.extension
+    tags:
+      - { name: bitrix.events.init, module: '', event: onAfterTwigTemplateEngineInited, method: handle, sort: 100 }

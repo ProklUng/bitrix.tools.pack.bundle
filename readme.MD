@@ -251,3 +251,28 @@ parameters:
 ```
 
 Если такой переменной нет, то прогревается только главная (`/`) страница.
+
+### Твиговские дела
+
+Если на проекте используется [пакет](https://github.com/ProklUng/tools.twig) с поддержкой твиговского движка 
+в компонентах, то в экземпляр того Твига автоматически перебрасываются все зарегистрированные в контейнере 
+`extensions` (то, что отмечено в конфигах тэгом `twig.extension`).
+
+Также эта штука поддается использованию автономно, без контейнера.
+
+Где-нибудь в `init.php`:
+
+```php
+use Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigExtensionsBag;
+use Bitrix\Main\EventManager;
+
+$events = [new Local\TwigExtension, Local\FooExtension::class];
+$handler = new TwigExtensionsBag($events);
+
+$eventManager = EventManager::getInstance();
+$eventManager->addEventHandler(
+    '',
+    'onAfterTwigTemplateEngineInited',
+    [$handler, 'handle']
+);
+```
