@@ -4,6 +4,8 @@ namespace Prokl\BitrixOrdinaryToolsBundle\DependencyInjection;
 
 use Exception;
 use LogicException;
+use Maximaster\Tools\Twig\TemplateEngine;
+use Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigExtensionsBag;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -62,6 +64,11 @@ class BitrixOrdinaryToolsExtension extends Extension
         // Фасады подтягиваются только, если установлен соответствующий бандл.
         if (class_exists('Prokl\FacadeBundle\Services\AbstractFacade')) {
             $loader->load('facades.yaml');
+        }
+
+        // Не установлен tools.twig - удалить лишнее.
+        if (!class_exists(TemplateEngine::class)) {
+            $container->removeDefinition(TwigExtensionsBag::class);
         }
     }
 
