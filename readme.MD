@@ -279,3 +279,6 @@ $eventManager->addEventHandler(
 
 Если [пакет](https://github.com/ProklUng/tools.twig) не установлен, то соответствующие сервисы 
 удаляется на стадии компиляции контейнера.
+
+Изначальная конфигурация [пакета](https://github.com/ProklUng/tools.twig) имеет приоритет над прокидываемым
+ снаружи.
