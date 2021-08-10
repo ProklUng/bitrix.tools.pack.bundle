@@ -256,11 +256,11 @@ parameters:
 
 Если на проекте используется [пакет](https://github.com/ProklUng/tools.twig) с поддержкой твиговского движка 
 в компонентах, то в экземпляр того Твига автоматически перебрасываются все зарегистрированные в контейнере 
-`extensions` (то, что отмечено в конфигах тэгом `twig.extension`).
+`extensions` (то, что отмечено в конфигах тэгом `twig.extension`) и `runtimes` (тэг `twig.runtime`).
 
 Также эта штука поддается использованию автономно, без контейнера.
 
-Где-нибудь в `init.php`:
+Где-нибудь в `init.php` (для `extensions`; для `runtimes` класс обработчик - `Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigRuntimesBag`):
 
 ```php
 use Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigExtensionsBag;
@@ -277,4 +277,5 @@ $eventManager->addEventHandler(
 );
 ```
 
-Если этот пакет не установлен, то соответствующий сервис удаляется на стадии компиляции контейнера.
+Если [пакет](https://github.com/ProklUng/tools.twig) не установлен, то соответствующие сервисы 
+удаляется на стадии компиляции контейнера.

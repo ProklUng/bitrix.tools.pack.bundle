@@ -47,3 +47,10 @@ services:
       - !tagged_iterator twig.extension
     tags:
       - { name: bitrix.events.init, module: '', event: onAfterTwigTemplateEngineInited, method: handle, sort: 100 }
+
+  # Мигратор runtimes в Твиг от maximaster.twig.tool.
+  Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigRuntimesBag:
+    arguments:
+      - !tagged_iterator twig.runtime
+    tags:
+      - { name: bitrix.events.init, module: '', event: onAfterTwigTemplateEngineInited, method: handle, sort: 100 }

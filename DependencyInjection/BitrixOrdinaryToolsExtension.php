@@ -6,6 +6,7 @@ use Exception;
 use LogicException;
 use Maximaster\Tools\Twig\TemplateEngine;
 use Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigExtensionsBag;
+use Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigRuntimesBag;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -69,6 +70,7 @@ class BitrixOrdinaryToolsExtension extends Extension
         // Не установлен tools.twig - удалить лишнее.
         if (!class_exists(TemplateEngine::class)) {
             $container->removeDefinition(TwigExtensionsBag::class);
+            $container->removeDefinition(TwigRuntimesBag::class);
         }
     }
 
