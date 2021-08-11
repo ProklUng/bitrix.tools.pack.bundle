@@ -22,17 +22,6 @@ composer.json:
 composer require proklung/bitrix-tools-pack-bundle
 ``` 
  
-##Трэйты для миграций
-
-- `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\ClearCacheTrait` - очищает все виды кэша
-- `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\EmailEventTrait` - создает новый тип почтовых событий
-- `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\EmailTemplateTrait` - создает новый шаблон для почтового сообщения
-- `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\IblockPropertyTrait` - создает новое пользовательское свойство инфоблока
-- `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\MigrationsHlBlocksHelpersTrait` - хэлперы для HighLoad инфоблоков
-- `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\ModuleTrait` - установка-удаление модулей
-- `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\UserFieldTrait` - создание пользовательских полей
-- `Prokl\BitrixOrdinaryToolsBundle\Services\Migrations\UserGroupTrait` - создание групп пользователей 
-
 ## Фасады
 
 - `Prokl\BitrixOrdinaryToolsBundle\Services\Facades\Container` - Экземпляр сервис-контейнера
