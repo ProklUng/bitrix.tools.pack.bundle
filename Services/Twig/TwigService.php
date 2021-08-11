@@ -82,20 +82,6 @@ class TwigService
     }
 
     /**
-     * Пути к базовой директории шаблонов из конфига контейнера.
-     *
-     * @return array
-     *
-     * @since 06.11.2020
-     */
-    public function getPaths() : array
-    {
-        $this->twigOptions['paths'] = (array)$this->twigOptions['paths'];
-
-        return $this->twigOptions['paths'] ?? [];
-    }
-
-    /**
      * Еще один базовый путь к шаблонам Twig.
      *
      * @param string $path Путь.
