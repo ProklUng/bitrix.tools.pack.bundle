@@ -2,6 +2,7 @@
 
 namespace Prokl\BitrixOrdinaryToolsBundle\Services\Twig;
 
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
@@ -15,6 +16,8 @@ use Twig\Loader\FilesystemLoader;
  */
 class TwigService
 {
+    use ContainerAwareTrait;
+
     /**
      * @var Environment Twig.
      */
@@ -47,6 +50,8 @@ class TwigService
      * @param string           $debug       Среда.
      * @param string           $cachePath   Путь к кэшу (серверный).
      * @param array|null       $twigOptions Опции Твига.
+     *
+     * @throws LoaderError Ошибки Твига.
      */
     public function __construct(
         FilesystemLoader $loader,
@@ -60,7 +65,7 @@ class TwigService
         $this->cachePath = $cachePath;
 
         $this->twigEnvironment = $this->initTwig(
-            $loader,
+            $this->loader,
             $debug,
             $cachePath
         );
@@ -140,6 +145,21 @@ class TwigService
                     $loader->addPath($path, $namespace);
                 }
             }
+        }
+
+        if (!empty($this->twigOptions['globals'])) {
+            foreach ($this->twigOptions['globals'] as $key => $global) {
+                if (isset($global['type']) && 'service' === $global['type']) {
+                    $this->twigEnvironment->addGlobal($key, $this->container->get($global['id']));
+                } else {
+                    $this->twigEnvironment->addGlobal($key, $global['value']);
+                }
+            }
+        }
+
+        if (isset($this->twigOptions['autoescape_service']) && isset($this->twigOptions['autoescape_service_method'])) {
+            $service = $this->container->get($this->twigOptions['autoescape_service']);
+            $this->twigOptions['autoescape'] = [$service, $this->twigOptions['autoescape_service']['autoescape_service_method']];
         }
 
         return new Environment(

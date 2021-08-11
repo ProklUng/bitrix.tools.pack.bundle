@@ -13,6 +13,12 @@ services:
     Twig\Extension\ExtensionInterface:
       tags: ['twig.extension']
 
+    Twig\Loader\LoaderInterface:
+      tags: [ 'twig.loader' ]
+
+    Twig\Extension\RuntimeExtensionInterface:
+      tags: [ 'twig.runtime' ]
+
   # Twig loader
   twig.loader:
     class: Twig\Loader\FilesystemLoader
@@ -27,6 +33,8 @@ services:
       - '%debug%'
       - '%twig_cache_dir%'
       - '%twig_config%'
+    calls:
+      - setContainer: ['@service_container']
 
   # Экземпляр Twig.
   twig.instance:
