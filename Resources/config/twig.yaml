@@ -20,7 +20,7 @@ services:
       - '%twig_paths%'
 
   # Twig
-  twig:
+  twig_service:
     class: Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TwigService
     arguments:
       - '@twig.loader'
@@ -31,7 +31,9 @@ services:
   # Экземпляр Twig.
   twig.instance:
     class: Twig\Environment
-    factory: ['@twig', 'instance']
+    factory: ['@twig_service', 'instance']
+
+  twig: '@twig.instance'
 
   # Template cache warmer
   Prokl\BitrixOrdinaryToolsBundle\Services\Twig\TemplateCacheWarmer:
