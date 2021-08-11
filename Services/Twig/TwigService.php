@@ -118,12 +118,29 @@ class TwigService
      * @param string           $cachePath Путь к кэшу (серверный).
      *
      * @return Environment
+     * @throws LoaderError Ошибки Твига.
      */
     private function initTwig(
         FilesystemLoader $loader,
         string $debug,
         string $cachePath
     ) : Environment {
+
+        $allPaths = $loader->getPaths();
+
+        if (array_key_exists('paths', $this->twigOptions)) {
+            foreach ($this->twigOptions['paths'] as $path => $namespace) {
+                if (in_array(trim($path), $allPaths, true)) {
+                    continue;
+                }
+
+                if (!$namespace) {
+                    $loader->addPath($path);
+                } else {
+                    $loader->addPath($path, $namespace);
+                }
+            }
+        }
 
         return new Environment(
             $loader,
