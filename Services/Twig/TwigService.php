@@ -39,7 +39,7 @@ class TwigService
     private $debug;
 
     /**
-     * @var string $cachePath
+     * @var string|boolean $cachePath
      */
     private $cachePath;
 
@@ -62,7 +62,7 @@ class TwigService
         $this->loader = $loader;
         $this->twigOptions = (array)$twigOptions;
         $this->debug = $debug;
-        $this->cachePath = $cachePath;
+        $this->cachePath = $cachePath ?: false;
 
         $this->twigEnvironment = $this->initTwig(
             $this->loader,
