@@ -133,6 +133,32 @@ class TwigService
             }
         }
 
+        if (isset($this->twigOptions['autoescape_service']) && isset($this->twigOptions['autoescape_service_method'])) {
+            $service = $this->container->get($this->twigOptions['autoescape_service']);
+            $this->twigOptions['autoescape'] = [$service, $this->twigOptions['autoescape_service']['autoescape_service_method']];
+        }
+
+        $this->twigEnvironment = new Environment(
+            $loader,
+            [
+                'debug' => (bool)$debug,
+                'cache' => $cachePath,
+                'autoescape' => false
+            ]
+        );
+
+        $this->initGlobals();
+
+        return $this->twigEnvironment;
+    }
+
+    /**
+     * Инициализация globals.
+     *
+     * @return void
+     */
+    private function initGlobals() : void
+    {
         if (!empty($this->twigOptions['globals'])) {
             foreach ($this->twigOptions['globals'] as $key => $global) {
                 if (isset($global['type']) && 'service' === $global['type']) {
@@ -142,18 +168,5 @@ class TwigService
                 }
             }
         }
-
-        if (isset($this->twigOptions['autoescape_service']) && isset($this->twigOptions['autoescape_service_method'])) {
-            $service = $this->container->get($this->twigOptions['autoescape_service']);
-            $this->twigOptions['autoescape'] = [$service, $this->twigOptions['autoescape_service']['autoescape_service_method']];
-        }
-
-        return new Environment(
-            $loader,
-            [
-                'debug' => (bool)$debug,
-                'cache' => $cachePath,
-            ]
-        );
     }
 }
