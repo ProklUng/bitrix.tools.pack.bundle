@@ -3,6 +3,7 @@
 namespace Prokl\BitrixOrdinaryToolsBundle;
 
 use Prokl\BitrixOrdinaryToolsBundle\DependencyInjection\BitrixOrdinaryToolsExtension;
+use Prokl\BitrixOrdinaryToolsBundle\DependencyInjection\CompilerPass\TwigBundlesViewCompilerPass;
 use Prokl\BitrixOrdinaryToolsBundle\DependencyInjection\CompilerPass\TwigTunerCompilerPass;
 use Prokl\BitrixOrdinaryToolsBundle\DependencyInjection\CompilerPass\WarmersConfiguratorCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -37,5 +38,6 @@ final class BitrixOrdinaryToolsBundle extends Bundle
 
         $container->addCompilerPass(new WarmersConfiguratorCompilerPass());
         $container->addCompilerPass(new TwigTunerCompilerPass());
+        $container->addCompilerPass(new TwigBundlesViewCompilerPass());
     }
 }
