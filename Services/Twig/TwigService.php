@@ -67,7 +67,7 @@ class TwigService
         $this->twigEnvironment = $this->initTwig(
             $this->loader,
             $debug,
-            $cachePath
+            $this->cachePath
         );
     }
 
