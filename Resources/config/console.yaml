@@ -1,0 +1,16 @@
+####################
+# Консольные команды
+####################
+
+services:
+  # конфигурация по умолчанию в *этом* файле
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+
+  # Проверка - отправляется email или нет.
+  Prokl\BitrixOrdinaryToolsBundle\Commands\EmailsCanBeSendCommand:
+    tags:
+      - { name: console.command, command: bitrix:check-send-email }
